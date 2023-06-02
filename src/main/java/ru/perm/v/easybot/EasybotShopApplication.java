@@ -1,4 +1,3 @@
-
 package ru.perm.v.easybot;
 
 import org.springframework.boot.SpringApplication;
