@@ -12,7 +12,7 @@ public class GroupProductEntity {
     @Id
     @Column(name = "id", nullable = false)
     private Long id = -1L;
-    @Column(name = "id", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name = "";
     @Column(name = "is_last", nullable = false)
     private Boolean isLast = false;
