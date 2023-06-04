@@ -9,7 +9,8 @@ import ru.perm.v.easybot.service.GroupProductService;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -20,8 +21,8 @@ class GroupProductServiceImplTest {
         GroupProductRepository repository = mock(GroupProductRepository.class);
 
         List<GroupProductEntity> entities = new ArrayList<>();
-        entities.add(new GroupProductEntity(1L, "NAME_1",true,-100L));
-        entities.add(new GroupProductEntity(2L, "NAME_2",true,-100L));
+        entities.add(new GroupProductEntity(1L, "NAME_1", true, -100L));
+        entities.add(new GroupProductEntity(2L, "NAME_2", true, -100L));
         when(repository.findAllByOrderByIdAsc()).thenReturn(entities);
 
         GroupProductService groupProductService = new GroupProductServiceImpl(repository);
@@ -29,8 +30,8 @@ class GroupProductServiceImplTest {
         List<GroupProductEntity> groups = groupProductService.getAll();
 
         assertEquals(2, groups.size());
-        assertEquals(new GroupProductEntity(1L, "NAME_1",true,-100L), groups.get(0));
-        assertEquals(new GroupProductEntity(2L, "NAME_2",true,-100L), groups.get(1));
+        assertEquals(new GroupProductEntity(1L, "NAME_1", true, -100L), groups.get(0));
+        assertEquals(new GroupProductEntity(2L, "NAME_2", true, -100L), groups.get(1));
     }
 
     @Test
@@ -38,7 +39,7 @@ class GroupProductServiceImplTest {
         GroupProductRepository repository = mock(GroupProductRepository.class);
         GroupProductService groupProductService = new GroupProductServiceImpl(repository);
 
-        GroupProductEntity entity =new GroupProductEntity(1L, "NAME_1",true,-100L);
+        GroupProductEntity entity = new GroupProductEntity(1L, "NAME_1", true, -100L);
         when(repository.getById(1L)).thenReturn(entity);
         GroupProductEntity groupProduct = groupProductService.getById(1L);
         assertEquals(1L, groupProduct.getId());
