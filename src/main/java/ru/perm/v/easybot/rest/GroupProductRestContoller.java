@@ -5,12 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.perm.v.easybot.dto.GroupProductDTO;
 import ru.perm.v.easybot.entity.GroupProductEntity;
 import ru.perm.v.easybot.service.GroupProductService;
 
+import javax.websocket.server.PathParam;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,6 +32,12 @@ public class GroupProductRestContoller {
         return entities.stream().map(entity ->
                 new GroupProductDTO(entity.getId(), entity.getName(), entity.getParentId()))
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/{id}")
+    public GroupProductDTO getById(@PathVariable("id") Long id) throws Exception {
+        GroupProductEntity entity = groupProductService.getById(id);
+        return new GroupProductDTO(entity.getId(), entity.getName(), entity.getParentId());
     }
 
     @GetMapping("/echo")
