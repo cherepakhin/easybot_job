@@ -15,25 +15,24 @@ spring:
       path: /h2
       settings:
         web-allow-others: true
-        spring.hibernate.hbm2ddl.auto: create-drop
   dataSource:
-    url: jdbc:h2:mem:rentdb
+    url: jdbc:h2:mem:easybotdb;DB_CLOSE_DELAY=-1;MODE=MYSQL
     driverClassName: org.h2.Driver
     username: sa
     password:
   hibernate:
     ddl-auto: create-drop
-    dialect: org.hibernate.dialect.H2Dialect
+    dialect: org.hibernate.dialect.MySQL57Dialect
     #        generate_statistics: true
-  main:
-    lazy-initialization: true
+  jpa:
+    # show SQL statements in console.
+    show-sql: true
+    #    database-platform: hibernate.dialect.MySQL57Dialect
+    properties:
+      hibernate:
+        format_sql: true
+        hbm2ddl:
+          import_files_sql_extractor: org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
   flyway:
     enabled: true
     generate_statistics: true
-  jpa:
-    hibernate.ddl-auto: create
-    properties:
-      hibernate.show_sql: true
-      hibernate.format_sql: true
-      hibernate.enable_lazy_load_no_trans: true
-      hibernate.use_sql_comments: true
