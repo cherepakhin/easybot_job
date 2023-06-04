@@ -1,6 +1,7 @@
 package ru.perm.v.easybot.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.perm.v.easybot.entity.GroupProductEntity;
 import ru.perm.v.easybot.repository.GroupProductRepository;
@@ -20,7 +21,7 @@ public class GroupProductServiceImpl implements GroupProductService {
 
     @Override
     public List<GroupProductEntity> getAll() {
-        return repository.findAll();
+        return repository.findAllByOrderByIdAsc();
     }
 
     @Override
