@@ -38,10 +38,7 @@ class GroupProductRestContollerTest {
         String NAME = "NAME_1";
         Long PARENT_ID = 1L;
         GroupProductService groupProductService = mock(GroupProductService.class);
-        GroupProductEntity groupProduct = new GroupProductEntity();
-        groupProduct.setId(ID);
-        groupProduct.setName(NAME);
-        groupProduct.setParentId(PARENT_ID);
+        GroupProductEntity groupProduct = new GroupProductEntity(ID, NAME, false,PARENT_ID);
 
         when(groupProductService.getById(ID)).thenReturn(groupProduct);
         GroupProductRestContoller contoller = new GroupProductRestContoller(groupProductService);
