@@ -7,12 +7,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class GroupProductEntityTest {
     @Test
     void createSimple() {
-        GroupProductEntity parent = new GroupProductEntity();
-        GroupProductEntity groupProduct = new GroupProductEntity(100L, "GROUP100", true, -1L);
+        Long PARENT_ID = -1L;
+        GroupProductEntity groupProduct = new GroupProductEntity(100L, "GROUP100", true, PARENT_ID);
 
         assertEquals(100L, groupProduct.getId());
         assertEquals("GROUP100", groupProduct.getName());
-        assertEquals(-1L, groupProduct.getParentId());
+        assertEquals(PARENT_ID, groupProduct.getParentId());
     }
 
     @Test
