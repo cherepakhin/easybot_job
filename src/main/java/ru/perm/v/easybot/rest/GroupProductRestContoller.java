@@ -28,8 +28,6 @@ public class GroupProductRestContoller {
     public List<GroupProductDTO> getAll() {
         List<GroupProductEntity> entities = groupProductService.getAll();
         return entities.stream().map(entity -> new GroupProductDTO(entity.getId(), entity.getName(), entity.getIsLast(), entity.getParentId())).collect(Collectors.toList());
-//        (new GroupProductDTO(-1L, "-",false, 0L)
-//        return Arrays.asList(new GroupProductDTO(-1L, "-",false, 0L));
     }
 
     @GetMapping("/echo")
