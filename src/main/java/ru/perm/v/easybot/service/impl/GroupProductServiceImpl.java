@@ -9,10 +9,14 @@ import ru.perm.v.easybot.service.GroupProductService;
 import java.util.List;
 
 @Service
-public class  GroupProductServiceImpl implements GroupProductService {
+public class GroupProductServiceImpl implements GroupProductService {
 
     @Autowired
     private GroupProductRepository repository;
+
+    public GroupProductServiceImpl(@Autowired GroupProductRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public List<GroupProductEntity> getAll() {
@@ -20,7 +24,11 @@ public class  GroupProductServiceImpl implements GroupProductService {
     }
 
     @Override
-    public GroupProductEntity getById(Long id) {
-        return repository.getById(id);
+    public GroupProductEntity getById(Long id) throws Exception {
+        GroupProductEntity groupProduct = repository.getById(id);
+        if (groupProduct.getId().compareTo(-1L) == 0) {
+            throw new Exception("Not found");
+        }
+        return groupProduct;
     }
 }

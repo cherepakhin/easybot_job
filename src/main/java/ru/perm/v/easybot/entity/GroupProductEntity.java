@@ -10,7 +10,7 @@ import java.util.Objects;
 @Table(name = "group_product")
 public class GroupProductEntity {
     @Id
-    @Column(name = "n")
+    @Column(name = "id")
     private Long id = -1L;
     @Column(name = "name", nullable = false)
     private String name = "";
@@ -50,14 +50,6 @@ public class GroupProductEntity {
     }
 
     public void setIsLast(Boolean last) {
-        isLast = last;
-    }
-
-    public Boolean getLast() {
-        return isLast;
-    }
-
-    public void setLast(Boolean last) {
         isLast = last;
     }
 

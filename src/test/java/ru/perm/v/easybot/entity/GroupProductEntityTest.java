@@ -9,6 +9,7 @@ class GroupProductEntityTest {
     void createSimple() {
         GroupProductEntity parent = new GroupProductEntity();
         GroupProductEntity groupProduct = new GroupProductEntity(100L, "GROUP100", true, -1L);
+
         assertEquals(100L, groupProduct.getId());
         assertEquals("GROUP100", groupProduct.getName());
         assertEquals(-1L, groupProduct.getParentId());

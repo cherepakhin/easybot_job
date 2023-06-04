@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface GroupProductService {
     List<GroupProductEntity> getAll();
-    public GroupProductEntity getById(Long id);
+    GroupProductEntity getById(Long id) throws Exception;
 }
