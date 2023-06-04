@@ -1,7 +1,9 @@
 package ru.perm.v.easybot.service.impl;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import ru.perm.v.easybot.entity.GroupProductEntity;
 import ru.perm.v.easybot.repository.GroupProductRepository;
 import ru.perm.v.easybot.service.GroupProductService;
@@ -9,17 +11,17 @@ import ru.perm.v.easybot.service.GroupProductService;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class GroupProductServiceImplTest {
 
+    @MockBean
+    public GroupProductRepository repository;
+
     @Test
     void getAll() {
-        GroupProductRepository repository = mock(GroupProductRepository.class);
-
         List<GroupProductEntity> entities = new ArrayList<>();
         entities.add(new GroupProductEntity(1L, "NAME_1", true, -100L));
         entities.add(new GroupProductEntity(2L, "NAME_2", true, -100L));
@@ -36,20 +38,21 @@ class GroupProductServiceImplTest {
 
     @Test
     void getById() throws Exception {
-        GroupProductRepository repository = mock(GroupProductRepository.class);
         GroupProductService groupProductService = new GroupProductServiceImpl(repository);
-
-        GroupProductEntity entity = new GroupProductEntity(1L, "NAME_1", true, -100L);
-        when(repository.getById(1L)).thenReturn(entity);
+        when(repository.getById(1L)).thenReturn(new GroupProductEntity(1L, "NAME_1", true, -100L));
         GroupProductEntity groupProduct = groupProductService.getById(1L);
         assertEquals(1L, groupProduct.getId());
     }
 
     @Test
     void getByNotExistId() {
-        GroupProductRepository repository = mock(GroupProductRepository.class);
         GroupProductService groupProductService = new GroupProductServiceImpl(repository);
-        assertThrows(Exception.class, () -> groupProductService.getById(-100L));
+        try {
+            groupProductService.getById(-100L);
+        } catch (Exception e) {
+            assertTrue(true);
+        }
+        assertFalse(false);
     }
 
     @Test

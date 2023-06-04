@@ -29,7 +29,7 @@ public class GroupProductServiceImpl implements GroupProductService {
     public GroupProductEntity getById(Long id) throws Exception {
         GroupProductEntity groupProduct = repository.getById(id);
         if (groupProduct.getId().compareTo(GROUP_PRODUCT_ID_NOT_FOUND) == 0) {
-            throw new Exception("Not found");
+            throw new Exception(String.format("Not found GroupProductEntity id = ", id));
         }
         return groupProduct;
     }
@@ -37,14 +37,16 @@ public class GroupProductServiceImpl implements GroupProductService {
     @Override
     public GroupProductEntity save(Long id, String name, Long parentId) throws Exception {
         try {
+            GroupProductEntity parent = getById(parentId);
             getById(parentId);
             GroupProductEntity groupProduct = new GroupProductEntity();
             groupProduct.setId(id);
             groupProduct.setName(name);
-            groupProduct.setParentId(parentId);
+            groupProduct.setParentId(parent.getId());
             return save(groupProduct);
         } catch (Exception e) {
-            throw e;
+            throw new Exception(
+                    String.format("Error save GroupProductEntity id=%s, name=%s, paentId=%s", id, name, parentId));
         }
     }
 
