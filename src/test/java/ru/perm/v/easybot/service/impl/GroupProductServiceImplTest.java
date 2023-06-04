@@ -51,4 +51,21 @@ class GroupProductServiceImplTest {
         assertThrows(Exception.class, () -> groupProductService.getById(-100L));
     }
 
+    @Test
+    void save() throws Exception {
+        GroupProductRepository repository = mock(GroupProductRepository.class);
+
+        GroupProductService groupProductService = new GroupProductServiceImpl(repository);
+        when(repository.save(new GroupProductEntity(1L, "NAME_1", true, -100L)))
+                .thenReturn(new GroupProductEntity(1L, "NAME_1", true, -100L));
+
+        GroupProductEntity saved = groupProductService.save(
+                new GroupProductEntity(1L, "NAME_1", true, -100L));
+
+
+        assertEquals(new GroupProductEntity(1L, "NAME_1", true, -100L), saved);
+        verify(repository, times(1))
+                .save(new GroupProductEntity(1L, "NAME_1", true, -100L));
+
+    }
 }

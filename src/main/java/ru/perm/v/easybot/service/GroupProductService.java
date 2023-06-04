@@ -7,4 +7,6 @@ import java.util.List;
 public interface GroupProductService {
     List<GroupProductEntity> getAll();
     GroupProductEntity getById(Long id) throws Exception;
+    GroupProductEntity save(Long id, String name, Long parentId) throws Exception;
+    GroupProductEntity save(GroupProductEntity groupProduct) throws Exception;
 }

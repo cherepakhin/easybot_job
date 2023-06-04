@@ -33,4 +33,27 @@ public class GroupProductServiceImpl implements GroupProductService {
         }
         return groupProduct;
     }
+
+    @Override
+    public GroupProductEntity save(Long id, String name, Long parentId) throws Exception {
+        try {
+            getById(parentId);
+            GroupProductEntity groupProduct = new GroupProductEntity();
+            groupProduct.setId(id);
+            groupProduct.setName(name);
+            groupProduct.setParentId(parentId);
+            return save(groupProduct);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    @Override
+    public GroupProductEntity save(GroupProductEntity groupProduct) throws Exception {
+        try {
+            return repository.save(groupProduct);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 }
