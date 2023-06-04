@@ -14,8 +14,6 @@ public class GroupProductEntity {
     private Long id = -1L;
     @Column(name = "name", nullable = false)
     private String name = "";
-    @Column(name = "is_last", nullable = false)
-    private Boolean isLast = false;
     @Column(name = "parent_id", nullable = false)
     private Long parentId = -1L;
 
@@ -25,7 +23,6 @@ public class GroupProductEntity {
     public GroupProductEntity(Long id, String name, Boolean isLast, Long parentId) {
         this.id = id;
         this.name = name;
-        this.isLast = isLast;
         this.parentId = parentId;
     }
 
@@ -45,14 +42,6 @@ public class GroupProductEntity {
         this.name = name;
     }
 
-    public Boolean getIsLast() {
-        return isLast;
-    }
-
-    public void setIsLast(Boolean last) {
-        isLast = last;
-    }
-
     public Long getParentId() {
         return parentId;
     }
@@ -66,11 +55,11 @@ public class GroupProductEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GroupProductEntity that = (GroupProductEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(isLast, that.isLast) && Objects.equals(parentId, that.parentId);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(parentId, that.parentId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, isLast, parentId);
+        return Objects.hash(id, name, parentId);
     }
 }

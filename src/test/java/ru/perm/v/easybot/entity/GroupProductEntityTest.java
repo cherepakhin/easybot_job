@@ -13,7 +13,6 @@ class GroupProductEntityTest {
         assertEquals(100L, groupProduct.getId());
         assertEquals("GROUP100", groupProduct.getName());
         assertEquals(-1L, groupProduct.getParentId());
-        assertTrue(groupProduct.getIsLast());
     }
 
     @Test
@@ -21,13 +20,5 @@ class GroupProductEntityTest {
         GroupProductEntity group = new GroupProductEntity();
         assertEquals(-1L, group.getId());
         assertEquals("", group.getName());
-        assertEquals(false, group.getIsLast());
-    }
-
-    @Test
-    void createLast() {
-        GroupProductEntity group = new GroupProductEntity();
-        group.setIsLast(true);
-        assertTrue(group.getIsLast());
     }
 }

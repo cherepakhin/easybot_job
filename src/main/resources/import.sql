@@ -1,6 +1,6 @@
-insert into group_product(id, name, is_last, parent_id) values (1, 'Desktop Computers', true, false);
-insert into group_product(id, name, is_last, parent_id) values (2, 'Notebooks', true, -1);
-insert into group_product(id, name, is_last, parent_id) values (3, 'Monitors', true, -1);
-insert into group_product(id, name, is_last, parent_id) values (4, 'Hard drives', true, -1);
+insert into group_product(id, name, parent_id) values (1, 'Desktop Computers', false);
+insert into group_product(id, name, parent_id) values (2, 'Notebooks', -1);
+insert into group_product(id, name, parent_id) values (3, 'Monitors', -1);
+insert into group_product(id, name, parent_id) values (4, 'Hard drives', -1);
 
 COMMIT;

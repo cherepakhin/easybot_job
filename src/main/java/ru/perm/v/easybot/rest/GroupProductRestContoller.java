@@ -28,7 +28,7 @@ public class GroupProductRestContoller {
     public List<GroupProductDTO> getAll() {
         List<GroupProductEntity> entities = groupProductService.getAll();
         return entities.stream().map(entity ->
-                new GroupProductDTO(entity.getId(), entity.getName(), entity.getIsLast(), entity.getParentId()))
+                new GroupProductDTO(entity.getId(), entity.getName(), entity.getParentId()))
                 .collect(Collectors.toList());
     }
 
