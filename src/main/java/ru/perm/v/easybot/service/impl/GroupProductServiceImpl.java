@@ -18,4 +18,9 @@ public class  GroupProductServiceImpl implements GroupProductService {
     public List<GroupProductEntity> getAll() {
         return repository.findAll();
     }
+
+    @Override
+    public GroupProductEntity getById(Long id) {
+        return repository.getById(id);
+    }
 }

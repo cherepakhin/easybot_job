@@ -21,4 +21,10 @@ class GroupProductServiceImplTest {
         List<GroupProductEntity> groups = groupProductService.getAll();
         assertEquals(4, groups.size());
     }
+
+    @Test
+    void getById() {
+        GroupProductEntity groupProduct = groupProductService.getById(1L);
+        assertEquals(1L, groupProduct.getId());
+    }
 }
