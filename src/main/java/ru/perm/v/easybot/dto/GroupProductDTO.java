@@ -52,7 +52,8 @@ public class GroupProductDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GroupProductDTO that = (GroupProductDTO) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(isLast, that.isLast) && Objects.equals(parentId, that.parentId);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) &&
+                Objects.equals(isLast, that.isLast) && Objects.equals(parentId, that.parentId);
     }
 
     @Override

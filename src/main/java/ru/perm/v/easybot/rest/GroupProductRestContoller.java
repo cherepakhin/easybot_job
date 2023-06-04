@@ -27,7 +27,9 @@ public class GroupProductRestContoller {
     @GetMapping("/")
     public List<GroupProductDTO> getAll() {
         List<GroupProductEntity> entities = groupProductService.getAll();
-        return entities.stream().map(entity -> new GroupProductDTO(entity.getId(), entity.getName(), entity.getIsLast(), entity.getParentId())).collect(Collectors.toList());
+        return entities.stream().map(entity ->
+                new GroupProductDTO(entity.getId(), entity.getName(), entity.getIsLast(), entity.getParentId()))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/echo")
