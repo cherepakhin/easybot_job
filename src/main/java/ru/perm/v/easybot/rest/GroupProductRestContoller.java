@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.perm.v.easybot.dto.GroupProductDTO;
 import ru.perm.v.easybot.entity.GroupProductEntity;
 import ru.perm.v.easybot.service.GroupProductService;
@@ -34,11 +31,18 @@ public class GroupProductRestContoller {
 
     @GetMapping("/{id}")
     public GroupProductDTO getById(@PathVariable("id") Long id) throws Exception {
-        //TODO move to ctrl
         GroupProductEntity entity = groupProductService.getById(id);
         return new GroupProductDTO(entity.getId(), entity.getName(), entity.getParentId());
     }
 
+    @PostMapping("/")
+    public GroupProductDTO create(String name, Long parentId) {
+        GroupProductEntity entity = groupProductService.create(name, parentId);
+        return new GroupProductDTO(entity.getId(),entity.getName(), entity.getParentId());
+    }
+
+    //TODO: delete
+    //TODO: update
     @GetMapping("/echo")
     public String echo() {
         return "Ok";

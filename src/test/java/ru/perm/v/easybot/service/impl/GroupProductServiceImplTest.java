@@ -71,4 +71,37 @@ class GroupProductServiceImplTest {
                 .save(new GroupProductEntity(1L, "NAME_1", true, -100L));
 
     }
+
+//    @Test
+//    void create() {
+//        GroupProductRepository repository = mock(GroupProductRepository.class);
+//        Long ID = 1L;
+//        String NAME="NAME_1";
+//        Long PARENT_ID = -1L;
+//        GroupProductEntity entity = new GroupProductEntity();
+//        when(repository.save(entity))
+//                .thenReturn(new GroupProductEntity(ID, NAME, true, PARENT_ID));
+//
+//    }
+
+    @Test
+    void create() {
+        GroupProductRepository repository = mock(GroupProductRepository.class);
+        Long MAX_ID=10L;
+        String NAME="NAME_1";
+        Long PARENT_ID = -1L;
+
+        when(repository.getMaxId()).thenReturn(MAX_ID);
+        when(repository.save(new GroupProductEntity(MAX_ID +1, NAME, true, PARENT_ID)))
+                .thenReturn(new GroupProductEntity(MAX_ID +1, NAME, true, PARENT_ID));
+
+        GroupProductService service = new GroupProductServiceImpl(repository);
+
+        GroupProductEntity groupProduct = service.create(NAME, PARENT_ID);
+
+        assertEquals(MAX_ID + 1, groupProduct.getId());
+        assertEquals(NAME, groupProduct.getName());
+        assertEquals(PARENT_ID, groupProduct.getParentId());
+        verify(repository, times(1)).getMaxId();
+    }
 }

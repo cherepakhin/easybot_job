@@ -35,6 +35,9 @@ public class GroupProductServiceImpl implements GroupProductService {
 
     @Override
     public GroupProductEntity save(Long id, String name, Long parentId) throws Exception {
+        if(id == null) {
+            return create(name, parentId);
+        }
         try {
             GroupProductEntity parent = getById(parentId);
             getById(parentId);
@@ -47,6 +50,19 @@ public class GroupProductServiceImpl implements GroupProductService {
             throw new Exception(
                     String.format("Error save GroupProductEntity id=%s, name=%s, paentId=%s", id, name, parentId));
         }
+    }
+
+    @Override
+    public GroupProductEntity create(String name, Long parentId) {
+        GroupProductEntity entity = new GroupProductEntity();
+        entity.setId(getMaxId() + 1);
+        entity.setName(name);
+        entity.setParentId(parentId);
+        return repository.save(entity);
+    }
+
+    protected Long getMaxId() {
+        return repository.getMaxId();
     }
 
     @Override

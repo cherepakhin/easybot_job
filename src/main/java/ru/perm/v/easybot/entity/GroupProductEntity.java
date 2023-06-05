@@ -16,6 +16,7 @@ public class GroupProductEntity {
     private String name = "";
     @Column(name = "parent_id", nullable = false)
     private Long parentId = -1L;
+    //TODO: add tree index String "01.20.30..." or Long 010230...
 
     public GroupProductEntity() {
     }
