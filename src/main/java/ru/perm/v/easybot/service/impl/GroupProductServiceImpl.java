@@ -13,7 +13,6 @@ import static ru.perm.v.easybot.entity.EntityConsts.GROUP_PRODUCT_ID_NOT_FOUND;
 @Service
 public class GroupProductServiceImpl implements GroupProductService {
 
-    @Autowired
     private GroupProductRepository repository;
 
     public GroupProductServiceImpl(@Autowired GroupProductRepository repository) {
