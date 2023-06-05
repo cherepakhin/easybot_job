@@ -73,5 +73,7 @@ class ProductServiceImplTest {
         }
 
         assertEquals(201L, product.getId());
+        assertEquals(NAME, product.getName());
+        assertEquals(GROUP_ID, product.getGroupProductId());
     }
 }
