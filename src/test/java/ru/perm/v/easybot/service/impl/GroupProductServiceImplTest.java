@@ -22,8 +22,8 @@ class GroupProductServiceImplTest {
     @Test
     void getAll() {
         List<GroupProductEntity> entities = new ArrayList<>();
-        entities.add(new GroupProductEntity(1L, "NAME_1", true, -100L));
-        entities.add(new GroupProductEntity(2L, "NAME_2", true, -100L));
+        entities.add(new GroupProductEntity(1L, "NAME_1", true, 1L));
+        entities.add(new GroupProductEntity(2L, "NAME_2", true, 1L));
         when(repository.findAllByOrderByIdAsc()).thenReturn(entities);
 
         GroupProductService groupProductService = new GroupProductServiceImpl(repository);
@@ -31,8 +31,8 @@ class GroupProductServiceImplTest {
         List<GroupProductEntity> groups = groupProductService.getAll();
 
         assertEquals(2, groups.size());
-        assertEquals(new GroupProductEntity(1L, "NAME_1", true, -100L), groups.get(0));
-        assertEquals(new GroupProductEntity(2L, "NAME_2", true, -100L), groups.get(1));
+        assertEquals(new GroupProductEntity(1L, "NAME_1", true, 1L), groups.get(0));
+        assertEquals(new GroupProductEntity(2L, "NAME_2", true, 1L), groups.get(1));
     }
 
     @Test

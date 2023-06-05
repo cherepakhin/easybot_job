@@ -56,4 +56,22 @@ class ProductServiceImplTest {
         assertEquals(ID_20, received.get(1).getId());
         assertEquals(100L, received.get(0).getGroupProductId());
     }
+
+    @Test
+    void create() {
+        String NAME = "PRODUCT";
+        Long GROUP_ID = 10L;
+        ProductEntity mockProduct = new ProductEntity(201L, NAME, GROUP_ID);
+        when(repository.getMaxId()).thenReturn(200L);
+        when(repository.save(new ProductEntity(201L, NAME, GROUP_ID))).thenReturn(mockProduct);
+        ProductEntity product = null;
+
+        try {
+            product = productService.create(NAME, GROUP_ID);
+        } catch (Exception e) {
+            fail();        
+        }
+
+        assertEquals(201L, product.getId());
+    }
 }

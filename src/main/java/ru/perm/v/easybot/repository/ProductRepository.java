@@ -6,12 +6,15 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.perm.v.easybot.entity.ProductEntity;
 
+import javax.persistence.Table;
 import java.util.List;
 
 @Repository
 @Transactional
+@Table(name = "product")
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     List<ProductEntity> findAllByOrderByIdAsc();
-    @Query(value = "SELECT max(id) FROM product")
+
+    @Query(value = "SELECT max(id) FROM ProductEntity")
     Long getMaxId();
 }
