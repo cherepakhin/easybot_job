@@ -12,8 +12,6 @@ import ru.perm.v.easybot.dto.GroupProductDTO;
 import ru.perm.v.easybot.entity.GroupProductEntity;
 import ru.perm.v.easybot.service.GroupProductService;
 
-import javax.websocket.server.PathParam;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,12 +28,13 @@ public class GroupProductRestContoller {
     public List<GroupProductDTO> getAll() {
         List<GroupProductEntity> entities = groupProductService.getAll();
         return entities.stream().map(entity ->
-                new GroupProductDTO(entity.getId(), entity.getName(), entity.getParentId()))
+                        new GroupProductDTO(entity.getId(), entity.getName(), entity.getParentId()))
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
     public GroupProductDTO getById(@PathVariable("id") Long id) throws Exception {
+        //TODO move to ctrl
         GroupProductEntity entity = groupProductService.getById(id);
         return new GroupProductDTO(entity.getId(), entity.getName(), entity.getParentId());
     }

@@ -1,9 +1,6 @@
 package ru.perm.v.easybot.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -14,6 +11,8 @@ public class ProductEntity {
     private Long id = -1L;
     @Column(name = "name", nullable = false)
     private String name = "";
+    @Column(name = "group_product_id", nullable = false)
+    private Long groupProductId = -1L;
 
     public ProductEntity() {
     }
@@ -37,6 +36,14 @@ public class ProductEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getGroupProductId() {
+        return groupProductId;
+    }
+
+    public void setGroupProductId(Long groupProductId) {
+        this.groupProductId = groupProductId;
     }
 
     @Override
