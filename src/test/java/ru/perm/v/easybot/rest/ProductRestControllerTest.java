@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import ru.perm.v.easybot.entity.ProductEntity;
 import ru.perm.v.easybot.service.ProductService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,8 +19,11 @@ class ProductRestControllerTest {
         ProductRestController controller = new ProductRestController(service);
         Long ID_1 = 1L;
         Long ID_2 = 2L;
+        List<ProductEntity> products = new ArrayList<>();
+        products.add(new ProductEntity(ID_1,""));
+        products.add(new ProductEntity(ID_2,""));
         try {
-            when(service.getAll()).thenReturn(List.of(new ProductEntity(ID_1,""),new ProductEntity(ID_2,"")));
+            when(service.getAll()).thenReturn(products);
         } catch (Exception e) {
             fail();
         }
