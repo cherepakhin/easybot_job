@@ -72,18 +72,6 @@ class GroupProductServiceImplTest {
 
     }
 
-//    @Test
-//    void create() {
-//        GroupProductRepository repository = mock(GroupProductRepository.class);
-//        Long ID = 1L;
-//        String NAME="NAME_1";
-//        Long PARENT_ID = -1L;
-//        GroupProductEntity entity = new GroupProductEntity();
-//        when(repository.save(entity))
-//                .thenReturn(new GroupProductEntity(ID, NAME, true, PARENT_ID));
-//
-//    }
-
     @Test
     void create() {
         GroupProductRepository repository = mock(GroupProductRepository.class);
