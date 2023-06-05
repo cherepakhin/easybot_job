@@ -37,8 +37,8 @@ class ProductServiceImplTest {
     void getAll() {
         Long ID_10 = 10L;
         Long ID_20 = 20L;
-        ProductEntity product10 = new ProductEntity(ID_10, "");
-        ProductEntity product20 = new ProductEntity(ID_20, "");
+        ProductEntity product10 = new ProductEntity(ID_10, "", 100L);
+        ProductEntity product20 = new ProductEntity(ID_20, "", 200L);
         List<ProductEntity> products = new ArrayList<>();
         products.add(product10);
         products.add(product20);
@@ -54,5 +54,6 @@ class ProductServiceImplTest {
         assertEquals(2, received.size());
         assertEquals(ID_10, received.get(0).getId());
         assertEquals(ID_20, received.get(1).getId());
+        assertEquals(100L, received.get(0).getGroupProductId());
     }
 }

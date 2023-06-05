@@ -1,6 +1,7 @@
 package ru.perm.v.easybot.rest;
 
 import org.junit.jupiter.api.Test;
+import ru.perm.v.easybot.dto.ProductDTO;
 import ru.perm.v.easybot.entity.ProductEntity;
 import ru.perm.v.easybot.service.ProductService;
 
@@ -20,14 +21,25 @@ class ProductRestControllerTest {
         ProductRestController controller = new ProductRestController(service);
         Long ID_1 = 1L;
         Long ID_2 = 2L;
+        Long GROUP_ID = 100L;
         List<ProductEntity> products = new ArrayList<>();
-        products.add(new ProductEntity(ID_1,""));
-        products.add(new ProductEntity(ID_2,""));
+        products.add(new ProductEntity(ID_1,"NAME_"+ID_1, GROUP_ID));
+        products.add(new ProductEntity(ID_2,"NAME_"+ID_2, GROUP_ID));
         try {
             when(service.getAll()).thenReturn(products);
         } catch (Exception e) {
             fail();
         }
-        assertEquals(2, controller.getAll().size());
+        List<ProductDTO> savedProducts = controller.getAll();
+
+        assertEquals(2, savedProducts.size());
+
+        assertEquals(ID_1, savedProducts.get(0).getId());
+        assertEquals("NAME_"+ID_1, savedProducts.get(0).getName());
+        assertEquals(GROUP_ID, savedProducts.get(0).getGroupProductId());
+
+        assertEquals(ID_2, savedProducts.get(1).getId());
+        assertEquals("NAME_"+ID_2, savedProducts.get(1).getName());
+        assertEquals(GROUP_ID, savedProducts.get(1).getGroupProductId());
     }
 }

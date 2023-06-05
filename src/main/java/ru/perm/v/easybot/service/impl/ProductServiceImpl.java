@@ -27,4 +27,17 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductEntity> getAll() throws Exception {
         return repository.findAll(Sort.by("name"));
     }
+
+    @Override
+    public Long getMaxId() {
+        return repository.getMaxId();
+    }
+
+    @Override
+    public ProductEntity create(String name, Long groupId) throws Exception {
+        Long id = getMaxId() + 1;
+        ProductEntity product = new ProductEntity(id, name, groupId);
+        ProductEntity saved = repository.save(product);
+        return saved;
+    }
 }
