@@ -8,8 +8,7 @@ import ru.perm.v.easybot.service.ProductService;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -60,5 +59,18 @@ class ProductRestControllerTest {
         assertEquals(ID_1, product.getId());
         assertEquals(NAME, product.getName());
         assertEquals(GROUP_ID, product.getGroupProductId());
+    }
+
+    @Test
+    void getByIdNotFound() throws Exception {
+        ProductService service = mock(ProductService.class);
+        ProductRestController controller = new ProductRestController(service);
+        Long ID_1 = 1L;
+        try {
+            when(service.getById(ID_1)).thenReturn(null);
+        } catch (Exception e) {
+            fail();
+        }
+        assertThrows(Exception.class, () -> controller.getById(ID_1));
     }
 }
