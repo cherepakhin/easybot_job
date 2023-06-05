@@ -42,4 +42,23 @@ class ProductRestControllerTest {
         assertEquals("NAME_"+ID_2, savedProducts.get(1).getName());
         assertEquals(GROUP_ID, savedProducts.get(1).getGroupProductId());
     }
+
+    @Test
+    void getById() throws Exception {
+        ProductService service = mock(ProductService.class);
+        ProductRestController controller = new ProductRestController(service);
+        Long ID_1 = 1L;
+        String NAME = "NAME_1";
+        Long GROUP_ID = 100L;
+        try {
+            when(service.getById(ID_1)).thenReturn(new ProductEntity(ID_1,NAME, GROUP_ID));
+        } catch (Exception e) {
+            fail();
+        }
+        ProductDTO product = controller.getById(ID_1);
+
+        assertEquals(ID_1, product.getId());
+        assertEquals(NAME, product.getName());
+        assertEquals(GROUP_ID, product.getGroupProductId());
+    }
 }

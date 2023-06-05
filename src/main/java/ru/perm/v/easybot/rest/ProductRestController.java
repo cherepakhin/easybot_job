@@ -5,9 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.perm.v.easybot.dto.ProductDTO;
+import ru.perm.v.easybot.entity.ProductEntity;
 import ru.perm.v.easybot.service.ProductService;
 
 import java.util.List;
@@ -29,6 +31,15 @@ public class ProductRestController {
     @Autowired
     private ProductService productService;
 
+    @GetMapping("/{id}")
+    public ProductDTO getById(@PathVariable Long id) throws Exception {
+        ProductEntity entity = productService.getById(id);
+        if(entity == null) {
+            throw new Exception(String.format("Product id=%s",id));
+        }
+        return new ProductDTO(entity.getId(), entity.getName(), entity.getGroupProductId());
+    }
+
     @GetMapping("/")
     public List<ProductDTO> getAll() throws Exception {
         List<ProductDTO> products = productService.getAll()
@@ -37,4 +48,5 @@ public class ProductRestController {
                 .collect(Collectors.toList());
         return products;
     }
+
 }
