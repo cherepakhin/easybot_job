@@ -36,3 +36,9 @@ spring:
   flyway:
     enabled: true
     generate_statistics: true
+
+logging:
+  level:
+    root: info
+  file:
+    path: log/
