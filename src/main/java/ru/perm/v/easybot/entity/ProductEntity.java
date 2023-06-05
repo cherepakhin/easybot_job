@@ -20,9 +20,10 @@ public class ProductEntity {
     public ProductEntity() {
     }
 
-    public ProductEntity(Long id, String name) {
+    public ProductEntity(Long id, String name, Long groupProductId) {
         this.id = id;
         this.name = name;
+        this.groupProductId = groupProductId;
     }
 
     public Long getId() {

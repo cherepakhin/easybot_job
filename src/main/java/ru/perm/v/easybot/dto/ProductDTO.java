@@ -29,6 +29,14 @@ public class ProductDTO {
         this.name = name;
     }
 
+    public Long getGroupProductId() {
+        return groupProductId;
+    }
+
+    public void setGroupProductId(Long groupProductId) {
+        this.groupProductId = groupProductId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
