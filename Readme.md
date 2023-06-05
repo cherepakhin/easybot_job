@@ -42,3 +42,8 @@
 
 ![jacoco](doc/jacoco.png)
 
+### TODO
+
+Провести behave тестирование с помощью RestAssured
+
+
