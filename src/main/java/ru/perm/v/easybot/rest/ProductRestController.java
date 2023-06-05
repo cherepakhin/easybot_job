@@ -7,9 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.perm.v.easybot.dto.GroupProductDTO;
 import ru.perm.v.easybot.dto.ProductDTO;
-import ru.perm.v.easybot.service.GroupProductService;
 import ru.perm.v.easybot.service.ProductService;
 
 import java.util.List;
