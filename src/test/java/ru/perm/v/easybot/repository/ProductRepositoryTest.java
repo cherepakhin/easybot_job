@@ -3,12 +3,11 @@ package ru.perm.v.easybot.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import ru.perm.v.easybot.entity.GroupProductEntity;
 import ru.perm.v.easybot.entity.ProductEntity;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class ProductRepositoryTest {
