@@ -8,5 +8,5 @@ public interface ProductService {
     ProductEntity getById(Long id) throws Exception;
     List<ProductEntity> getAll() throws Exception;
     ProductEntity create(String name, Long groupId) throws Exception;
-
+    List<ProductEntity> getByIdGroupProduct(Long id);
 }
