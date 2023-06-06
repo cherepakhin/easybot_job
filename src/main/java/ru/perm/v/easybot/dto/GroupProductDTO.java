@@ -6,6 +6,7 @@ public class GroupProductDTO {
     private Long id = -1L;
     private String name = "";
     private Long parentId = -1L;
+    // if true, then not childs. For optimize sql request and Product must link to last group.
     private Boolean isLast = true;
 
     public GroupProductDTO(Long id, String name, Long parentId, Boolean isLast) {
