@@ -35,7 +35,7 @@ public class ProductRestController {
     public ProductDTO getById(@PathVariable Long id) throws Exception {
         ProductEntity entity = productService.getById(id);
         if(entity == null) {
-            throw new Exception(String.format("Product id=%s",id));
+            throw new Exception(String.format("Product not found id=%s",id));
         }
         return new ProductDTO(entity.getId(), entity.getName(), entity.getGroupProductId());
     }
