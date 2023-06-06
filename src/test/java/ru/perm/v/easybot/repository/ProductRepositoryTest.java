@@ -19,8 +19,9 @@ class ProductRepositoryTest {
     @Test
     void findByGroupProductIdOrderByIdAsc() {
         List<ProductEntity> desktops = repository.findByGroupProductIdOrderByIdAsc(3L);
-        assertEquals(2, desktops.size());
+        assertEquals(3, desktops.size());
         assertEquals("Desktop1", desktops.get(0).getName());
         assertEquals("Desktop2", desktops.get(1).getName());
+        assertEquals("Desktop3", desktops.get(2).getName());
     }
 }

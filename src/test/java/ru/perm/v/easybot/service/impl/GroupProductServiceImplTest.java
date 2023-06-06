@@ -1,15 +1,12 @@
 package ru.perm.v.easybot.service.impl;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import ru.perm.v.easybot.entity.GroupProductEntity;
 import ru.perm.v.easybot.repository.GroupProductRepository;
 import ru.perm.v.easybot.service.GroupProductService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

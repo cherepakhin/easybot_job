@@ -34,4 +34,14 @@ public class ProductServiceImpl implements ProductService {
         ProductEntity product = new ProductEntity(id, name, groupId);
         return repository.save(product);
     }
+
+    /**
+     * Get products by ID group.
+     * @param idGroup - ID group product
+     * @return list products in group
+     */
+    @Override
+    public List<ProductEntity> getByIdGroupProduct(Long idGroup) {
+        return repository.findAll();
+    }
 }
