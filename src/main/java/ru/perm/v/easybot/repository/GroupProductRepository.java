@@ -13,7 +13,7 @@ import java.util.List;
 public interface GroupProductRepository extends JpaRepository<GroupProductEntity, Long> {
     List<GroupProductEntity> findAllByOrderByIdAsc();
 
-    @Query(value = "SELECT max(id) FROM group_product")
+    @Query(value = "SELECT max(id) FROM GroupProductEntity")
     Long getMaxId();
 
     List<GroupProductEntity> findByParentIdOrderByParentIdAsc(Long id);

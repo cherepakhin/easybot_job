@@ -34,7 +34,6 @@ class GroupProductServiceImplTest {
     @Test
     void getById() throws Exception {
         GroupProductService groupProductService = new GroupProductServiceImpl(repository);
-        when(repository.getById(1L)).thenReturn(new GroupProductEntity(1L, "NAME_1", true, -100L));
         GroupProductEntity groupProduct = groupProductService.getById(1L);
         assertEquals(1L, groupProduct.getId());
     }
