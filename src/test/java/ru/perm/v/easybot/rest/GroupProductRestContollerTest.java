@@ -45,6 +45,6 @@ class GroupProductRestContollerTest {
 
         GroupProductDTO dto = contoller.getById(ID);
 
-        assertEquals(new GroupProductDTO(ID, NAME, PARENT_ID), dto);
+        assertEquals(new GroupProductDTO(ID, NAME, PARENT_ID, false), dto);
     }
 }

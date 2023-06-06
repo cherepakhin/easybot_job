@@ -25,24 +25,25 @@ public class GroupProductRestContoller {
     public List<GroupProductDTO> getAll() {
         List<GroupProductEntity> entities = groupProductService.getAll();
         return entities.stream().map(entity ->
-                        new GroupProductDTO(entity.getId(), entity.getName(), entity.getParentId()))
+                        new GroupProductDTO(entity.getId(), entity.getName(), entity.getParentId(), entity.getIsLast()))
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
     public GroupProductDTO getById(@PathVariable("id") Long id) throws Exception {
         GroupProductEntity entity = groupProductService.getById(id);
-        return new GroupProductDTO(entity.getId(), entity.getName(), entity.getParentId());
+        return new GroupProductDTO(entity.getId(), entity.getName(), entity.getParentId(), entity.getIsLast());
     }
 
     @PostMapping("/")
-    public GroupProductDTO create(String name, Long parentId) {
-        GroupProductEntity entity = groupProductService.create(name, parentId);
-        return new GroupProductDTO(entity.getId(),entity.getName(), entity.getParentId());
+    public GroupProductDTO create(String name, Long parentId, Boolean isLast) {
+        GroupProductEntity entity = groupProductService.create(name, parentId,isLast);
+        return new GroupProductDTO(entity.getId(),entity.getName(), entity.getParentId(), entity.getIsLast());
     }
 
     //TODO: delete
     //TODO: update
+    // for check
     @GetMapping("/echo")
     public String echo() {
         return "Ok";

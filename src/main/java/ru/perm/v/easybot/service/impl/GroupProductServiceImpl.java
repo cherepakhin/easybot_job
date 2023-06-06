@@ -5,7 +5,10 @@ import org.springframework.stereotype.Service;
 import ru.perm.v.easybot.entity.GroupProductEntity;
 import ru.perm.v.easybot.repository.GroupProductRepository;
 import ru.perm.v.easybot.service.GroupProductService;
+import ru.perm.v.easybot.service.ProductService;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static ru.perm.v.easybot.entity.EntityConsts.GROUP_PRODUCT_ID_NOT_FOUND;
@@ -14,6 +17,8 @@ import static ru.perm.v.easybot.entity.EntityConsts.GROUP_PRODUCT_ID_NOT_FOUND;
 public class GroupProductServiceImpl implements GroupProductService {
 
     private GroupProductRepository repository;
+    @Autowired
+    private ProductService productService;
 
     public GroupProductServiceImpl(@Autowired GroupProductRepository repository) {
         this.repository = repository;
@@ -34,9 +39,9 @@ public class GroupProductServiceImpl implements GroupProductService {
     }
 
     @Override
-    public GroupProductEntity save(Long id, String name, Long parentId) throws Exception {
-        if(id == null) {
-            return create(name, parentId);
+    public GroupProductEntity save(Long id, String name, Long parentId, Boolean isLast) throws Exception {
+        if (id == null) {
+            return create(name, parentId, isLast);
         }
         try {
             GroupProductEntity parent = getById(parentId);
@@ -45,24 +50,12 @@ public class GroupProductServiceImpl implements GroupProductService {
             groupProduct.setId(id);
             groupProduct.setName(name);
             groupProduct.setParentId(parent.getId());
+            groupProduct.setIsLast(isLast);
             return save(groupProduct);
         } catch (Exception e) {
             throw new Exception(
                     String.format("Error save GroupProductEntity id=%s, name=%s, paentId=%s", id, name, parentId));
         }
-    }
-
-    @Override
-    public GroupProductEntity create(String name, Long parentId) {
-        GroupProductEntity entity = new GroupProductEntity();
-        entity.setId(getMaxId() + 1);
-        entity.setName(name);
-        entity.setParentId(parentId);
-        return repository.save(entity);
-    }
-
-    protected Long getMaxId() {
-        return repository.getMaxId();
     }
 
     @Override
@@ -72,5 +65,56 @@ public class GroupProductServiceImpl implements GroupProductService {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    @Override
+    public GroupProductEntity create(String name, Long parentId, Boolean isLast) {
+        GroupProductEntity entity = new GroupProductEntity();
+        entity.setId(getMaxId() + 1);
+        entity.setName(name);
+        entity.setParentId(parentId);
+        entity.setIsLast(isLast);
+        return repository.save(entity);
+    }
+
+    @Override
+    public void delete(Long id) throws Exception {
+        GroupProductEntity groupProduct = getById(id);
+        //TODO check product in group
+        if (isProductsInGroup(groupProduct)) {
+            throw new Exception(
+                    String.format("Can't delete group id=%s, group=%s. There are products in the group or subgroup.", id, groupProduct.getName()));
+        }
+        //TODO check subgroup in group
+        repository.delete(groupProduct);
+    }
+
+    @Override
+    public List<GroupProductEntity> findByParentId(Long id) {
+        return repository.findByParentIdOrderByParentIdAsc(id);
+    }
+
+    @Override
+    public List<GroupProductEntity> findAllLastGroupByAnyGroupId(Long id) {
+        //TODO: change to SQL
+        List<GroupProductEntity> ret = new ArrayList<>();
+        List<GroupProductEntity> groups = repository.findByParentIdOrderByParentIdAsc(id);
+        for (GroupProductEntity g : groups) {
+            List<GroupProductEntity> childs = findByParentId(g.getId());
+            if (childs.size() == 0) {
+                ret.add(g);
+            }
+        }
+        Collections.sort(ret, (g1,g2) -> g1.getId().compareTo(g2.getId()));
+        return ret;
+    }
+
+    protected boolean isProductsInGroup(GroupProductEntity groupProduct) {
+        return productService.getByIdGroupProduct(groupProduct.getId()).size() > 0;
+    }
+
+    protected Long getMaxId() {
+        //TODO времянка. Заменить на max id
+        return repository.count();
     }
 }

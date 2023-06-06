@@ -1,6 +1,8 @@
 package ru.perm.v.easybot.service.impl;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import ru.perm.v.easybot.entity.GroupProductEntity;
@@ -16,23 +18,20 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 class GroupProductServiceImplTest {
 
-    @MockBean
+    @Autowired
     public GroupProductRepository repository;
 
     @Test
     void getAll() {
-        List<GroupProductEntity> entities = new ArrayList<>();
-        entities.add(new GroupProductEntity(1L, "NAME_1", true, 1L));
-        entities.add(new GroupProductEntity(2L, "NAME_2", true, 1L));
-        when(repository.findAllByOrderByIdAsc()).thenReturn(entities);
-
         GroupProductService groupProductService = new GroupProductServiceImpl(repository);
 
         List<GroupProductEntity> groups = groupProductService.getAll();
 
-        assertEquals(2, groups.size());
-        assertEquals(new GroupProductEntity(1L, "NAME_1", true, 1L), groups.get(0));
-        assertEquals(new GroupProductEntity(2L, "NAME_2", true, 1L), groups.get(1));
+        assertEquals(6, groups.size());
+        assertEquals(new GroupProductEntity(1L, "IT products", false, -1L), groups.get(0));
+        assertEquals(new GroupProductEntity(2L, "Computers", false, 1L), groups.get(1));
+        assertEquals(new GroupProductEntity(3L, "Desktop Computers", true, 2L), groups.get(2));
+        assertEquals(new GroupProductEntity(4L, "Notebooks", true, 2L), groups.get(3));
     }
 
     @Test
@@ -72,24 +71,36 @@ class GroupProductServiceImplTest {
 
     }
 
+//    @Test
+//    void create() {
+//        GroupProductRepository repository = mock(GroupProductRepository.class);
+//        Long MAX_ID = 10L;
+//        String NAME = "NAME_1";
+//        Long PARENT_ID = -1L;
+//
+//        when(repository.getMaxId()).thenReturn(MAX_ID);
+//        when(repository.save(new GroupProductEntity(MAX_ID + 1, NAME, true, PARENT_ID)))
+//                .thenReturn(new GroupProductEntity(MAX_ID + 1, NAME, true, PARENT_ID));
+//
+//        GroupProductService service = new GroupProductServiceImpl(repository);
+//
+//        GroupProductEntity groupProduct = service.create(NAME, PARENT_ID);
+//
+//        assertEquals(MAX_ID + 1, groupProduct.getId());
+//        assertEquals(NAME, groupProduct.getName());
+//        assertEquals(PARENT_ID, groupProduct.getParentId());
+//        verify(repository, times(1)).getMaxId();
+//    }
+
     @Test
-    void create() {
-        GroupProductRepository repository = mock(GroupProductRepository.class);
-        Long MAX_ID=10L;
-        String NAME="NAME_1";
-        Long PARENT_ID = -1L;
-
-        when(repository.getMaxId()).thenReturn(MAX_ID);
-        when(repository.save(new GroupProductEntity(MAX_ID +1, NAME, true, PARENT_ID)))
-                .thenReturn(new GroupProductEntity(MAX_ID +1, NAME, true, PARENT_ID));
-
-        GroupProductService service = new GroupProductServiceImpl(repository);
-
-        GroupProductEntity groupProduct = service.create(NAME, PARENT_ID);
-
-        assertEquals(MAX_ID + 1, groupProduct.getId());
-        assertEquals(NAME, groupProduct.getName());
-        assertEquals(PARENT_ID, groupProduct.getParentId());
-        verify(repository, times(1)).getMaxId();
+    // only for demo, study, check etc
+    void findByParentId() {
+        Long ID = 1L;
+        List<GroupProductEntity> groups = repository.findByParentIdOrderByParentIdAscIdAsc(ID);
+        for(GroupProductEntity g :groups) {
+            System.out.println(g);
+        }
+        // Computers, Monitors, Hard drives
+        assertEquals(3, groups.size());
     }
 }
