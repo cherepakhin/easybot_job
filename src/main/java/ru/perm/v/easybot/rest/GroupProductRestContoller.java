@@ -1,5 +1,7 @@
 package ru.perm.v.easybot.rest;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +21,14 @@ import java.util.stream.Collectors;
 @Slf4j
 @Validated
 @AllArgsConstructor
+@Api(tags = "group-product-api")
 public class GroupProductRestContoller {
     @Autowired
     private GroupProductService groupProductService;
 
     //TODO: Add cache
     @GetMapping("/")
+    @ApiOperation("Get all GroupProductDTO ")
     public List<GroupProductDTO> getAll() {
         List<GroupProductEntity> entities = groupProductService.getAll();
         return entities.stream().map(entity ->
@@ -34,6 +38,7 @@ public class GroupProductRestContoller {
 
     //TODO: Add cache
     @GetMapping("/{id}")
+    @ApiOperation("Get GroupProductDTO by id")
     public GroupProductDTO getById(@PathVariable("id") Long id) {
         GroupProductEntity entity = null;
         try {
@@ -46,6 +51,7 @@ public class GroupProductRestContoller {
 
     //TODO: Add clear cache
     @PostMapping("/")
+    @ApiOperation("Create GroupProductDTO")
     public GroupProductDTO create(String name, Long parentId, Boolean isLast) {
         GroupProductEntity entity = null;
         try {
@@ -60,6 +66,7 @@ public class GroupProductRestContoller {
 
     //TODO: Add clear cache
     @PostMapping("/{id}")
+    @ApiOperation("Upadte GroupProductDTO")
     public GroupProductDTO update(@PathVariable("id") Long id, String name, Long parentId, Boolean isLast) {
         GroupProductEntity entity = null;
         try {
@@ -88,6 +95,7 @@ public class GroupProductRestContoller {
 
     //TODO: Add clear cache
     @DeleteMapping("/")
+    @ApiOperation("Delete GroupProductDTO")
     public void delete(Long id) {
         try {
             groupProductService.delete(id);
@@ -102,6 +110,7 @@ public class GroupProductRestContoller {
      * @return "Ok"
      */
     @GetMapping("/echo")
+    @ApiOperation("Simple echo for test")
     public String echo() {
         return "Ok";
     }

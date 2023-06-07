@@ -61,8 +61,14 @@ Content-Type: application/json
 
 ```
 
+### Swagger
+
+Доступен по адресу http://localhost:8780/api/swagger-ui/index.html
+
+![swagger](doc/swagger.png)
+
 ### TODO
 
-Провести behave тестирование с помощью RestAssured
+OpenApi Провести behave тестирование с помощью RestAssured Actuator
 
 

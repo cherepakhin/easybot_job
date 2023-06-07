@@ -1,5 +1,7 @@
 package ru.perm.v.easybot.rest;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/product")
 @Slf4j
 @Validated
+@Api(tags = "product-api")
 public class ProductRestController {
     private ProductService productService;
 
@@ -28,6 +31,7 @@ public class ProductRestController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Get ProductDTO by id")
     public ProductDTO getById(@PathVariable Long id) throws Exception {
         ProductEntity entity = productService.getById(id);
         if (entity == null) {
@@ -38,6 +42,7 @@ public class ProductRestController {
 
     //TODO: Add cache
     @GetMapping("/")
+    @ApiOperation("Get all ProductDTO")
     public List<ProductDTO> getAll() throws Exception {
         return productService.getAll()
                 .stream()
@@ -46,6 +51,7 @@ public class ProductRestController {
     }
 
     @PostMapping(value = "/", consumes = "application/json", produces = "application/json")
+    @ApiOperation("Save ProductDTO")
     public ProductDTO save(@Valid @RequestBody ProductDTO productDTO) throws Exception {
         ProductEntity product =
                 productService.update(productDTO.getId(), productDTO.getName(), productDTO.getGroupProductId());
@@ -55,12 +61,14 @@ public class ProductRestController {
     }
 
     @PutMapping("/")
+    @ApiOperation("Create ProductDTO")
     public ProductDTO create(@Valid ProductDTO productDTO) throws Exception {
         ProductEntity entity = productService.create(productDTO.getName(), productDTO.getGroupProductId());
         return new ProductDTO(entity.getId(), entity.getName(), entity.getGroupProductId());
     }
 
     @GetMapping("/groupId/{groupId}")
+    @ApiOperation("Get ProductDTO by GroupId")
     public List<ProductDTO> getByGroupId(@PathVariable Long groupId) throws Exception {
         return productService.getByIdGroupProduct(groupId).stream()
                 .map(p -> new ProductDTO(p.getId(), p.getName(), p.getGroupProductId()))
