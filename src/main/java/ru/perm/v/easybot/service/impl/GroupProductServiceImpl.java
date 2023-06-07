@@ -25,6 +25,17 @@ public class GroupProductServiceImpl implements GroupProductService {
     }
 
     @Override
+    public GroupProductEntity create(String name, Long parentId, Boolean isLast) throws Exception {
+        GroupProductEntity parent = getById(parentId);
+        GroupProductEntity entity = new GroupProductEntity();
+        entity.setId(getMaxId() + 1);
+        entity.setName(name);
+        entity.setParentId(parent.getId());
+        entity.setIsLast(isLast);
+        return repository.save(entity);
+    }
+
+    @Override
     public List<GroupProductEntity> getAll() {
         return repository.findAllByOrderByIdAsc();
     }
@@ -65,17 +76,6 @@ public class GroupProductServiceImpl implements GroupProductService {
         } catch (Exception e) {
             throw e;
         }
-    }
-
-    @Override
-    public GroupProductEntity create(String name, Long parentId, Boolean isLast) throws Exception {
-        GroupProductEntity parent = getById(parentId);
-        GroupProductEntity entity = new GroupProductEntity();
-        entity.setId(getMaxId() + 1);
-        entity.setName(name);
-        entity.setParentId(parent.getId());
-        entity.setIsLast(isLast);
-        return repository.save(entity);
     }
 
     @Override

@@ -55,6 +55,33 @@ public class GroupProductRestContoller {
         return new GroupProductDTO(entity.getId(), entity.getName(), entity.getParentId(), entity.getIsLast());
     }
 
+    @PostMapping("/{id}")
+    public GroupProductDTO update(@PathVariable("id") Long id, String name, Long parentId, Boolean isLast) {
+        GroupProductEntity entity = null;
+        try {
+            groupProductService.getById(id);
+        } catch (Exception e) {
+            String errMessage = String.format("Group id=%s no found", id);
+            log.error(errMessage);
+            throw new ResourceNotFoundException(errMessage);
+        }
+        try {
+            groupProductService.getById(parentId);
+        } catch (Exception e) {
+            String errMessage = String.format("Parent group id=%s no found", parentId);
+            log.error(errMessage);
+            throw new ResourceNotFoundException(errMessage);
+        }
+        try {
+            entity = groupProductService.save(id, name, parentId, isLast);
+        } catch (Exception e) {
+            String errMessage = String.format("Parent group(id=%s) is LAST. Can`t add to LAST group", parentId);
+            log.error(errMessage);
+            throw new ResourceNotFoundException(errMessage);
+        }
+        return new GroupProductDTO(entity.getId(), entity.getName(), entity.getParentId(), entity.getIsLast());
+    }
+
     @DeleteMapping("/")
     public void delete(Long id) {
         try {
@@ -65,7 +92,6 @@ public class GroupProductRestContoller {
         }
     }
 
-    //TODO: delete
     //TODO: update
 
     /**
