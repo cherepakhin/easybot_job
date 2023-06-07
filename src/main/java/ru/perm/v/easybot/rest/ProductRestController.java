@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
  * 2. Редактирование товара
  * 3. Просмотр всех существующих товаров по типу
  * 4. Просмотр товара по идентификатору
+ * 5. Добавить cache
  */
 @RestController
 @RequestMapping("/product")

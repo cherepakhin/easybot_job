@@ -23,6 +23,7 @@ public class GroupProductRestContoller {
     @Autowired
     private GroupProductService groupProductService;
 
+    //TODO: Add cache
     @GetMapping("/")
     public List<GroupProductDTO> getAll() {
         List<GroupProductEntity> entities = groupProductService.getAll();
@@ -31,6 +32,7 @@ public class GroupProductRestContoller {
                 .collect(Collectors.toList());
     }
 
+    //TODO: Add cache
     @GetMapping("/{id}")
     public GroupProductDTO getById(@PathVariable("id") Long id) {
         GroupProductEntity entity = null;
@@ -42,6 +44,7 @@ public class GroupProductRestContoller {
         return new GroupProductDTO(entity.getId(), entity.getName(), entity.getParentId(), entity.getIsLast());
     }
 
+    //TODO: Add clear cache
     @PostMapping("/")
     public GroupProductDTO create(String name, Long parentId, Boolean isLast) {
         GroupProductEntity entity = null;
@@ -55,6 +58,7 @@ public class GroupProductRestContoller {
         return new GroupProductDTO(entity.getId(), entity.getName(), entity.getParentId(), entity.getIsLast());
     }
 
+    //TODO: Add clear cache
     @PostMapping("/{id}")
     public GroupProductDTO update(@PathVariable("id") Long id, String name, Long parentId, Boolean isLast) {
         GroupProductEntity entity = null;
@@ -82,6 +86,7 @@ public class GroupProductRestContoller {
         return new GroupProductDTO(entity.getId(), entity.getName(), entity.getParentId(), entity.getIsLast());
     }
 
+    //TODO: Add clear cache
     @DeleteMapping("/")
     public void delete(Long id) {
         try {
@@ -93,6 +98,7 @@ public class GroupProductRestContoller {
     }
 
     //TODO: update
+    //TODO: Add clear cache
 
     /**
      * Rest is work? Need for integration test.
