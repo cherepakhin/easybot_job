@@ -3,13 +3,18 @@ package ru.perm.v.easybot.rest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.perm.v.easybot.dto.ProductDTO;
 import ru.perm.v.easybot.entity.ProductEntity;
+import ru.perm.v.easybot.rest.valiator.ProductDTOValidator;
 import ru.perm.v.easybot.service.ProductService;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,17 +26,21 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/product")
 @Slf4j
-@AllArgsConstructor
 @Validated
 public class ProductRestController {
-    @Autowired
     private ProductService productService;
+    private ProductDTOValidator validator;
+
+    public ProductRestController(@Autowired ProductService productService, @Autowired ProductDTOValidator validator) {
+        this.productService = productService;
+        this.validator = validator;
+    }
 
     @GetMapping("/{id}")
     public ProductDTO getById(@PathVariable Long id) throws Exception {
         ProductEntity entity = productService.getById(id);
-        if(entity == null) {
-            throw new Exception(String.format("Product not found id=%s",id));
+        if (entity == null) {
+            throw new Exception(String.format("Product not found id=%s", id));
         }
         return new ProductDTO(entity.getId(), entity.getName(), entity.getGroupProductId());
     }
@@ -47,6 +56,13 @@ public class ProductRestController {
 
     @PostMapping(value = "/", consumes = "application/json", produces = "application/json")
     public ProductDTO save(@Valid @RequestBody ProductDTO productDTO) throws Exception {
+//        Errors result = new BeanPropertyBindingResult(productDTO, "productDTO");
+//        validator.validate(productDTO, result);
+//        if (result.hasErrors()) {
+//            StringBuilder errors = new StringBuilder();
+//            for (ObjectError e : result.getAllErrors()) errors.append(e.toString());
+//            throw new Exception(String.format("Errors: %s", errors));
+//        }
         ProductEntity product =
                 productService.update(productDTO.getId(), productDTO.getName(), productDTO.getGroupProductId());
         // используется именно такой конструктор (не new ProductDTO(productEntity),
