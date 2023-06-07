@@ -1,25 +1,18 @@
 package ru.perm.v.easybot.rest;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.perm.v.easybot.dto.ProductDTO;
 import ru.perm.v.easybot.entity.ProductEntity;
-import ru.perm.v.easybot.rest.valiator.ProductDTOValidator;
 import ru.perm.v.easybot.service.ProductService;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * TODO 1. Добавление товара
  * TODO 3. Просмотр всех существующих товаров по типу
  * TODO 5. Добавить cache
  */
@@ -66,4 +59,12 @@ public class ProductRestController {
         ProductEntity entity = productService.create(productDTO.getName(), productDTO.getGroupProductId());
         return new ProductDTO(entity.getId(), entity.getName(), entity.getGroupProductId());
     }
+
+    @GetMapping("/groupId/{groupId}")
+    public List<ProductDTO> getByGroupId(@PathVariable Long groupId) throws Exception {
+        return productService.getByIdGroupProduct(groupId).stream()
+                .map(p -> new ProductDTO(p.getId(), p.getName(), p.getGroupProductId()))
+                .collect(Collectors.toList());
+    }
+
 }
