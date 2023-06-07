@@ -29,11 +29,9 @@ import java.util.stream.Collectors;
 @Validated
 public class ProductRestController {
     private ProductService productService;
-    private ProductDTOValidator validator;
 
-    public ProductRestController(@Autowired ProductService productService, @Autowired ProductDTOValidator validator) {
+    public ProductRestController(@Autowired ProductService productService) {
         this.productService = productService;
-        this.validator = validator;
     }
 
     @GetMapping("/{id}")

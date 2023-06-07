@@ -21,7 +21,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductEntity getById(Long id) throws Exception {
         return repository.findById(id).orElseThrow(
-                () -> new Exception(String.format("Not found product with %s", id)));
+                () -> new Exception(String.format("Not found product with id=%s", id)));
     }
 
     @Override
