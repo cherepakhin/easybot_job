@@ -6,6 +6,7 @@ import org.springframework.validation.Validator;
 import ru.perm.v.easybot.dto.ProductDTO;
 
 @Service
+//TODO
 public class ProductDTOValidator implements Validator {
 
     @Override

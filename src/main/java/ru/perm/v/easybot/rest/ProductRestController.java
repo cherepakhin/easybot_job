@@ -56,13 +56,6 @@ public class ProductRestController {
 
     @PostMapping(value = "/", consumes = "application/json", produces = "application/json")
     public ProductDTO save(@Valid @RequestBody ProductDTO productDTO) throws Exception {
-//        Errors result = new BeanPropertyBindingResult(productDTO, "productDTO");
-//        validator.validate(productDTO, result);
-//        if (result.hasErrors()) {
-//            StringBuilder errors = new StringBuilder();
-//            for (ObjectError e : result.getAllErrors()) errors.append(e.toString());
-//            throw new Exception(String.format("Errors: %s", errors));
-//        }
         ProductEntity product =
                 productService.update(productDTO.getId(), productDTO.getName(), productDTO.getGroupProductId());
         // используется именно такой конструктор (не new ProductDTO(productEntity),
