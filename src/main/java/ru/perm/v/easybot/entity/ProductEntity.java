@@ -1,6 +1,9 @@
 package ru.perm.v.easybot.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
@@ -17,9 +20,10 @@ public class ProductEntity {
     public ProductEntity() {
     }
 
-    public ProductEntity(Long id, String name) {
+    public ProductEntity(Long id, String name, Long groupProductId) {
         this.id = id;
         this.name = name;
+        this.groupProductId = groupProductId;
     }
 
     public Long getId() {

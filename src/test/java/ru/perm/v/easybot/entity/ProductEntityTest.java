@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ProductEntityTest {
     @Test
     void createSimple() {
-        ProductEntity product = new ProductEntity(100L, "NAME100");
+        ProductEntity product = new ProductEntity(100L, "NAME100", 0L);
         assertEquals(100L, product.getId());
         assertEquals("NAME100", product.getName());
     }

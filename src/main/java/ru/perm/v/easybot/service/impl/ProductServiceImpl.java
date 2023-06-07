@@ -20,11 +20,49 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductEntity getById(Long id) throws Exception {
-        return repository.getById(id);
+        return repository.findById(id).orElseThrow(
+                () -> new Exception(String.format("Not found product with id=%s", id)));
     }
 
     @Override
     public List<ProductEntity> getAll() throws Exception {
         return repository.findAll(Sort.by("name"));
+    }
+
+    @Override
+    public ProductEntity create(String name, Long groupId) throws Exception {
+        Long id = repository.getMaxId() + 1;
+        ProductEntity product = new ProductEntity(id, name, groupId);
+        return repository.save(product);
+    }
+
+    @Override
+    public ProductEntity update(Long id, String name, Long groupId) throws Exception {
+        ProductEntity product = getById(id);
+        product.setName(name);
+        product.setGroupProductId(groupId);
+        return repository.save(product);
+    }
+
+    @Override
+    public ProductEntity update(ProductEntity product) throws Exception {
+        return update(product.getId(), product.getName(), product.getGroupProductId());
+    }
+
+    @Override
+    public void delete(Long id) throws Exception {
+        getById(id); // check for exist
+        repository.deleteById(id);
+    }
+
+    /**
+     * Get products by ID group.
+     *
+     * @param idGroup - ID group product
+     * @return list products in group
+     */
+    @Override
+    public List<ProductEntity> getByIdGroupProduct(Long idGroup) {
+        return repository.findAll();
     }
 }

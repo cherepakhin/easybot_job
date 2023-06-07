@@ -16,6 +16,9 @@ public class GroupProductEntity {
     private String name = "";
     @Column(name = "parent_id", nullable = false)
     private Long parentId = -1L;
+    @Column(name = "is_last", nullable = false)
+    private Boolean isLast = true;
+    //TODO: add tree index String "01.20.30..." or String "010230..." for FAST search subgroups without many request
 
     public GroupProductEntity() {
     }
@@ -24,6 +27,7 @@ public class GroupProductEntity {
         this.id = id;
         this.name = name;
         this.parentId = parentId;
+        this.isLast = isLast;
     }
 
     public Long getId() {
@@ -50,16 +54,34 @@ public class GroupProductEntity {
         this.parentId = parentId;
     }
 
+    public Boolean getIsLast() {
+        return isLast;
+    }
+
+    public void setIsLast(Boolean last) {
+        this.isLast = last;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GroupProductEntity that = (GroupProductEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(parentId, that.parentId);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(parentId, that.parentId) && Objects.equals(isLast, that.isLast);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, parentId);
+        return Objects.hash(id, name, parentId, isLast);
+    }
+
+    @Override
+    public String toString() {
+        return "GroupProductEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", parentId=" + parentId +
+                ", isLast=" + isLast +
+                '}';
     }
 }
