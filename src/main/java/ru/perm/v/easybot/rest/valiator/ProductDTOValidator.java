@@ -17,7 +17,7 @@ public class ProductDTOValidator implements Validator {
     @Override
     public void validate(Object obj, Errors errors) {
         ProductDTO dto = (ProductDTO) obj;
-        if (dto.getId() == null || dto.getId().equals(31000L)) {
+        if (dto.getId() == null) {
             errors.rejectValue("id", "id is null");
         }
         if (dto.getGroupProductId() == null) {
