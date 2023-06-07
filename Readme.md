@@ -67,10 +67,14 @@ Content-Type: application/json
 
 ![swagger](doc/swagger.png)
 
+### Actuator
+
+Доступен по адресу http://127.0.0.1:8780/api/actuator/
+
+![actuator](doc/actuator.png)
+
 ### TODO
 
-OpenApi<br/>
-Actuator<br/>
 Провести behave тестирование с помощью RestAssured<br/> 
 
 
