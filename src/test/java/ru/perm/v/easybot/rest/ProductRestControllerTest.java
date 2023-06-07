@@ -73,4 +73,25 @@ class ProductRestControllerTest {
         }
         assertThrows(Exception.class, () -> controller.getById(ID_1));
     }
+
+    @Test
+    void save() {
+        ProductService service = mock(ProductService.class);
+        ProductRestController controller = new ProductRestController(service);
+        Long ID = 1L;
+        String NAME = "NAME_1";
+        Long GROUP_ID = 100L;
+        ProductDTO dto = new ProductDTO(ID, NAME, GROUP_ID);
+        ProductEntity savedProduct = new ProductEntity(ID, NAME, GROUP_ID);
+        ProductDTO returnedDTO = null;
+
+        try {
+            when(service.update(ID, NAME, GROUP_ID)).thenReturn(savedProduct);
+            returnedDTO = controller.save(dto);
+        } catch (Exception e) {
+            fail();
+        }
+
+        assertEquals(new ProductDTO(ID, NAME, GROUP_ID), returnedDTO);
+    }
 }

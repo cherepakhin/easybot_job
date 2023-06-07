@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.perm.v.easybot.dto.ProductDTO;
 import ru.perm.v.easybot.entity.ProductEntity;
 import ru.perm.v.easybot.service.ProductService;
@@ -48,6 +45,15 @@ public class ProductRestController {
                 .map(p -> new ProductDTO(p.getId(), p.getName(), p.getGroupProductId()))
                 .collect(Collectors.toList());
         return products;
+    }
+
+    @PostMapping("/")
+    public ProductDTO save(ProductDTO productDTO) throws Exception {
+        ProductEntity product =
+                productService.update(productDTO.getId(), productDTO.getName(), productDTO.getGroupProductId());
+        // используется именно такой конструктор (не new ProductDTO(productEntity),
+        // чтобы отвязаться от всяких JPA зависимостей
+        return new ProductDTO(product.getId(), product.getName(), product.getGroupProductId());
     }
 
 }
