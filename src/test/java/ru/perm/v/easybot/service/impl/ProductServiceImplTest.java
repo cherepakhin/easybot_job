@@ -87,19 +87,22 @@ class ProductServiceImplTest {
         ProductEntity savedProduct = new ProductEntity(ID, "SAVED_" + NAME, GROUP_ID);
 
         when(repository.findById(ID)).thenReturn(Optional.of(product));
-        when(repository.save(product)).thenReturn(savedProduct);
+        when(repository.save(savedProduct)).thenReturn(savedProduct);
 
         ProductService productService = new ProductServiceImpl(repository);
 
+        ProductEntity returnedProduct = null;
         try {
-            productService.update(product);
+            returnedProduct = productService.update(savedProduct);
         } catch (Exception e) {
             e.printStackTrace();
             fail();
         }
 
-        assertEquals("SAVED_" + NAME, savedProduct.getName());
-        assertEquals(ID, savedProduct.getId());
-        assertEquals(GROUP_ID, savedProduct.getGroupProductId());
+        assertEquals("SAVED_" + NAME, returnedProduct.getName());
+        assertEquals(ID, returnedProduct.getId());
+        assertEquals(GROUP_ID, returnedProduct.getGroupProductId());
+
+        verify(repository, times(1)).findById(ID);
     }
 }
