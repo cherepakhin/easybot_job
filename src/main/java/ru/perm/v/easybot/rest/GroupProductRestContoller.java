@@ -97,8 +97,6 @@ public class GroupProductRestContoller {
         }
     }
 
-    //TODO: Add clear cache
-
     /**
      * Rest is work? Need for integration test.
      * @return "Ok"
