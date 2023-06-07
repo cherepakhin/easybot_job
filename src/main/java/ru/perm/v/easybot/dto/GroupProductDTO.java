@@ -1,12 +1,17 @@
 package ru.perm.v.easybot.dto;
 
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class GroupProductDTO {
+    @NotNull
     private Long id = -1L;
+    @NotNull
     private String name = "";
+    @NotNull
     private Long parentId = -1L;
     // if true, then not childs. For optimize sql request and Product must link to last group.
+    @NotNull
     private Boolean isLast = true;
 
     // EMPTY CONSTRUCTOR NEED FOR JACKSON!!!

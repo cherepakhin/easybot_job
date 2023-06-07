@@ -9,21 +9,20 @@ import ru.perm.v.easybot.dto.ProductDTO;
 import ru.perm.v.easybot.entity.ProductEntity;
 import ru.perm.v.easybot.service.ProductService;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * TODO 1. Добавление товара
- * TODO 2. Редактирование товара
  * TODO 3. Просмотр всех существующих товаров по типу
- * TODO 4. Просмотр товара по идентификатору
  * TODO 5. Добавить cache
  */
 @RestController
 @RequestMapping("/product")
 @Slf4j
-@Validated
 @AllArgsConstructor
+@Validated
 public class ProductRestController {
     @Autowired
     private ProductService productService;
@@ -40,15 +39,14 @@ public class ProductRestController {
     //TODO: Add cache
     @GetMapping("/")
     public List<ProductDTO> getAll() throws Exception {
-        List<ProductDTO> products = productService.getAll()
+        return productService.getAll()
                 .stream()
                 .map(p -> new ProductDTO(p.getId(), p.getName(), p.getGroupProductId()))
                 .collect(Collectors.toList());
-        return products;
     }
 
-    @PostMapping("/")
-    public ProductDTO save(ProductDTO productDTO) throws Exception {
+    @PostMapping(value = "/", consumes = "application/json", produces = "application/json")
+    public ProductDTO save(@Valid @RequestBody ProductDTO productDTO) throws Exception {
         ProductEntity product =
                 productService.update(productDTO.getId(), productDTO.getName(), productDTO.getGroupProductId());
         // используется именно такой конструктор (не new ProductDTO(productEntity),
@@ -56,4 +54,9 @@ public class ProductRestController {
         return new ProductDTO(product.getId(), product.getName(), product.getGroupProductId());
     }
 
+    //TODO @PutMapping("/")
+    @PutMapping("/")
+    public ProductDTO create(@Valid ProductDTO productDTO) throws Exception {
+        return new ProductDTO(1L, "NAME", 10L);
+    }
 }

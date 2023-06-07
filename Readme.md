@@ -42,6 +42,25 @@
 
 ![jacoco](doc/jacoco.png)
 
+### Ручное тестирование
+
+Используется утилита httpie
+
+```shell
+>http GET :8780/api/product/31
+
+HTTP/1.1 200 
+Connection: keep-alive
+Content-Type: application/json
+
+{
+    "groupProductId": 3,
+    "id": 31,
+    "name": "Desktop1"
+}
+
+```
+
 ### TODO
 
 Провести behave тестирование с помощью RestAssured
