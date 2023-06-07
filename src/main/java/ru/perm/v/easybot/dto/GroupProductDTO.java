@@ -9,6 +9,10 @@ public class GroupProductDTO {
     // if true, then not childs. For optimize sql request and Product must link to last group.
     private Boolean isLast = true;
 
+    // EMPTY CONSTRUCTOR NEED FOR JACKSON!!!
+    public GroupProductDTO() {
+    }
+
     public GroupProductDTO(Long id, String name, Long parentId, Boolean isLast) {
         this.id = id;
         this.name = name;

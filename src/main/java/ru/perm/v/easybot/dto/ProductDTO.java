@@ -1,11 +1,18 @@
 package ru.perm.v.easybot.dto;
 
+import org.springframework.validation.annotation.Validated;
+
 import java.util.Objects;
 
+@Validated
 public class ProductDTO {
     private Long id = -1L;
     private String name = "";
     private Long groupProductId = -1L;
+
+    // EMPTY CONSTRUCTOR NEED FOR JACKSON!!!
+    public ProductDTO() {
+    }
 
     public ProductDTO(Long id, String name, Long groupProductId) {
         this.id = id;
