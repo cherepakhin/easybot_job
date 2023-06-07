@@ -16,7 +16,6 @@ import static org.mockito.Mockito.*;
 class ProductServiceImplTest {
 
     ProductRepository repository = mock(ProductRepository.class);
-    ProductService productService = new ProductServiceImpl(repository);
 
     @Test
     void getById() {
@@ -24,6 +23,7 @@ class ProductServiceImplTest {
         ProductEntity product = new ProductEntity();
         product.setId(ID);
         when(repository.findById(ID)).thenReturn(Optional.of(product));
+        ProductService productService = new ProductServiceImpl(repository);
         try {
             product = productService.getById(ID);
         } catch (Exception e) {
@@ -45,6 +45,7 @@ class ProductServiceImplTest {
         when(repository.findAll(Sort.by("name"))).thenReturn(products);
 
         List<ProductEntity> received = new ArrayList<>();
+        ProductService productService = new ProductServiceImpl(repository);
         try {
             received = productService.getAll();
         } catch (Exception e) {
@@ -64,15 +65,41 @@ class ProductServiceImplTest {
         when(repository.getMaxId()).thenReturn(200L);
         when(repository.save(new ProductEntity(201L, NAME, GROUP_ID))).thenReturn(mockProduct);
         ProductEntity product = null;
+        ProductService productService = new ProductServiceImpl(repository);
 
         try {
             product = productService.create(NAME, GROUP_ID);
         } catch (Exception e) {
-            fail();        
+            fail();
         }
 
         assertEquals(201L, product.getId());
         assertEquals(NAME, product.getName());
         assertEquals(GROUP_ID, product.getGroupProductId());
+    }
+
+    @Test
+    void update() {
+        Long ID = 1L;
+        String NAME = "PRODUCT";
+        Long GROUP_ID = 10L;
+        ProductEntity product = new ProductEntity(ID, NAME, GROUP_ID);
+        ProductEntity savedProduct = new ProductEntity(ID, "SAVED_" + NAME, GROUP_ID);
+
+        when(repository.findById(ID)).thenReturn(Optional.of(product));
+        when(repository.save(product)).thenReturn(savedProduct);
+
+        ProductService productService = new ProductServiceImpl(repository);
+
+        try {
+            productService.update(product);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+
+        assertEquals("SAVED_" + NAME, savedProduct.getName());
+        assertEquals(ID, savedProduct.getId());
+        assertEquals(GROUP_ID, savedProduct.getGroupProductId());
     }
 }

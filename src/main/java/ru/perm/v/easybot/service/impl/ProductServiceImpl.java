@@ -37,15 +37,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    // TODO update Long id, String name, Long groupId
     public ProductEntity update(Long id, String name, Long groupId) throws Exception {
-        return null;
+        ProductEntity product = getById(id);
+        product.setName(name);
+        product.setGroupProductId(groupId);
+        return repository.save(product);
     }
 
     @Override
-    // TODO update ProductEntity product
     public ProductEntity update(ProductEntity product) throws Exception {
-        return null;
+        return update(product.getId(), product.getName(), product.getGroupProductId());
     }
 
     @Override
