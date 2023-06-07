@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 class GroupProductRestContollerTest {
 
@@ -46,5 +46,16 @@ class GroupProductRestContollerTest {
         GroupProductDTO dto = contoller.getById(ID);
 
         assertEquals(new GroupProductDTO(ID, NAME, PARENT_ID, false), dto);
+    }
+
+    @Test
+    void delete() throws Exception {
+        Long ID = 1L;
+        GroupProductService groupProductService = mock(GroupProductService.class);
+        GroupProductRestContoller contoller = new GroupProductRestContoller(groupProductService);
+
+        doThrow(new Exception()).when(groupProductService).delete(ID);
+
+        assertThrows(Exception.class,() -> contoller.delete(ID));
     }
 }

@@ -55,6 +55,16 @@ public class GroupProductRestContoller {
         return new GroupProductDTO(entity.getId(), entity.getName(), entity.getParentId(), entity.getIsLast());
     }
 
+    @DeleteMapping("/")
+    public void delete(Long id) {
+        try {
+            groupProductService.delete(id);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw new Err500Exception(e.getMessage());
+        }
+    }
+
     //TODO: delete
     //TODO: update
 

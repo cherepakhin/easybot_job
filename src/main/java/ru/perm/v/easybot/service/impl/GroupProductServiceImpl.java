@@ -100,7 +100,6 @@ public class GroupProductServiceImpl implements GroupProductService {
 
     @Override
     public List<GroupProductEntity> findAllLastGroupByAnyGroupId(Long id) {
-        //TODO: change to SQL
         List<GroupProductEntity> ret = new ArrayList<>();
         List<GroupProductEntity> groups = repository.findByParentIdOrderByParentIdAsc(id);
         for (GroupProductEntity g : groups) {
@@ -109,7 +108,7 @@ public class GroupProductServiceImpl implements GroupProductService {
                 ret.add(g);
             }
         }
-        Collections.sort(ret, (g1,g2) -> g1.getId().compareTo(g2.getId()));
+        ret.sort((g1, g2) -> g1.getId().compareTo(g2.getId()));
         return ret;
     }
 

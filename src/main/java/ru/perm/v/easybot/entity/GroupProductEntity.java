@@ -18,7 +18,7 @@ public class GroupProductEntity {
     private Long parentId = -1L;
     @Column(name = "is_last", nullable = false)
     private Boolean isLast = true;
-    //TODO: add tree index String "01.20.30..." or Long 010230...
+    //TODO: add tree index String "01.20.30..." or String "010230..." for FAST search subgroups without many request
 
     public GroupProductEntity() {
     }
