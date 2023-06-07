@@ -16,12 +16,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * TODO
- * 1. Добавление товара
- * 2. Редактирование товара
- * 3. Просмотр всех существующих товаров по типу
- * 4. Просмотр товара по идентификатору
- * 5. Добавить cache
+ * TODO 1. Добавление товара
+ * TODO 2. Редактирование товара
+ * TODO 3. Просмотр всех существующих товаров по типу
+ * TODO 4. Просмотр товара по идентификатору
+ * TODO 5. Добавить cache
  */
 @RestController
 @RequestMapping("/product")
@@ -41,6 +40,7 @@ public class ProductRestController {
         return new ProductDTO(entity.getId(), entity.getName(), entity.getGroupProductId());
     }
 
+    //TODO: Add cache
     @GetMapping("/")
     public List<ProductDTO> getAll() throws Exception {
         List<ProductDTO> products = productService.getAll()

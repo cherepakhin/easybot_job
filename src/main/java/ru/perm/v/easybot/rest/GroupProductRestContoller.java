@@ -97,7 +97,6 @@ public class GroupProductRestContoller {
         }
     }
 
-    //TODO: update
     //TODO: Add clear cache
 
     /**
