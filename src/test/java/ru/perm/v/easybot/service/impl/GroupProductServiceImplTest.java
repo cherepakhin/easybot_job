@@ -140,4 +140,17 @@ class GroupProductServiceImplTest {
         verify(repository, times(1))
                 .getById(ID_DELETING_GROUP);
     }
+
+    @Test
+    void getMaxId() {
+        GroupProductRepository repository = mock(GroupProductRepository.class);
+        ProductService productService = mock(ProductService.class);
+
+        Long MAX_ID = 100L;
+
+        GroupProductService groupProductService = new GroupProductServiceImpl(repository, productService);
+        when(repository.getMaxId()).thenReturn(MAX_ID);
+
+        assertEquals(100L, groupProductService.getMaxId());
+    }
 }

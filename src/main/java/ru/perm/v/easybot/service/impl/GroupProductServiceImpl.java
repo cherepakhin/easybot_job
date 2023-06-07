@@ -112,12 +112,13 @@ public class GroupProductServiceImpl implements GroupProductService {
         return ret;
     }
 
+    @Override
+    public Long getMaxId() {
+        return repository.getMaxId();
+    }
+
     protected boolean isProductsInGroup(GroupProductEntity groupProduct) {
         return productService.getByIdGroupProduct(groupProduct.getId()).size() > 0;
     }
 
-    protected Long getMaxId() {
-        //TODO времянка. Заменить на max id
-        return repository.count();
-    }
 }

@@ -14,9 +14,11 @@ public interface GroupProductService {
     List<GroupProductEntity> findByParentId(Long id);
 
     /**
-     * find all LAST group by group id sorted by id
+     * find all LAST group by group id sorted by id. Need for link Product-GroupProduct.
+     * Product can link ONLY to LAST group. LAST group - don't have subgroup.
      * @param id group id
      * @return list GroupProduct
      */
     List<GroupProductEntity> findAllLastGroupByAnyGroupId(Long id);
+    Long getMaxId();
 }
