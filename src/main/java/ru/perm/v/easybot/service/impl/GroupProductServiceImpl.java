@@ -8,7 +8,6 @@ import ru.perm.v.easybot.service.GroupProductService;
 import ru.perm.v.easybot.service.ProductService;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static ru.perm.v.easybot.entity.EntityConsts.GROUP_PRODUCT_ID_NOT_FOUND;
@@ -86,7 +85,7 @@ public class GroupProductServiceImpl implements GroupProductService {
             throw new Exception(
                     String.format("Can't delete group id=%s, group=%s. There are products in the group or subgroup.", id, groupProduct.getName()));
         }
-        if(findByParentId(id).size() > 0) {
+        if (findByParentId(id).size() > 0) {
             throw new Exception(
                     String.format("Can't delete group id=%s, group=%s. There are subgroups in the group.", id, groupProduct.getName()));
         }
