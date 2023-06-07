@@ -57,7 +57,11 @@ public class GroupProductRestContoller {
 
     //TODO: delete
     //TODO: update
-    // for check
+
+    /**
+     * Rest is work? Need for integration test.
+     * @return "Ok"
+     */
     @GetMapping("/echo")
     public String echo() {
         return "Ok";
