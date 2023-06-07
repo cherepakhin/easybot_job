@@ -7,6 +7,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.perm.v.easybot.dto.GroupProductDTO;
 import ru.perm.v.easybot.entity.GroupProductEntity;
+import ru.perm.v.easybot.rest.excpt.Err500Exception;
+import ru.perm.v.easybot.rest.excpt.ResourceNotFoundException;
 import ru.perm.v.easybot.service.GroupProductService;
 
 import java.util.List;
@@ -30,15 +32,27 @@ public class GroupProductRestContoller {
     }
 
     @GetMapping("/{id}")
-    public GroupProductDTO getById(@PathVariable("id") Long id) throws Exception {
-        GroupProductEntity entity = groupProductService.getById(id);
+    public GroupProductDTO getById(@PathVariable("id") Long id) {
+        GroupProductEntity entity = null;
+        try {
+            entity = groupProductService.getById(id);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
         return new GroupProductDTO(entity.getId(), entity.getName(), entity.getParentId(), entity.getIsLast());
     }
 
     @PostMapping("/")
     public GroupProductDTO create(String name, Long parentId, Boolean isLast) {
-        GroupProductEntity entity = groupProductService.create(name, parentId,isLast);
-        return new GroupProductDTO(entity.getId(),entity.getName(), entity.getParentId(), entity.getIsLast());
+        GroupProductEntity entity = null;
+        try {
+            entity = groupProductService.create(name, parentId, isLast);
+        } catch (Exception e) {
+            String errMessage = String.format("Parent group(id=%s) is LAST. Can`t add to LAST group", parentId);
+            log.error(errMessage);
+            throw new ResourceNotFoundException(errMessage);
+        }
+        return new GroupProductDTO(entity.getId(), entity.getName(), entity.getParentId(), entity.getIsLast());
     }
 
     //TODO: delete

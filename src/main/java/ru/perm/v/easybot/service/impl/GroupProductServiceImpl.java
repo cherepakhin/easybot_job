@@ -68,11 +68,12 @@ public class GroupProductServiceImpl implements GroupProductService {
     }
 
     @Override
-    public GroupProductEntity create(String name, Long parentId, Boolean isLast) {
+    public GroupProductEntity create(String name, Long parentId, Boolean isLast) throws Exception {
+        GroupProductEntity parent = getById(parentId);
         GroupProductEntity entity = new GroupProductEntity();
         entity.setId(getMaxId() + 1);
         entity.setName(name);
-        entity.setParentId(parentId);
+        entity.setParentId(parent.getId());
         entity.setIsLast(isLast);
         return repository.save(entity);
     }
