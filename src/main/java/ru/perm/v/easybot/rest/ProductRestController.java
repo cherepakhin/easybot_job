@@ -61,9 +61,9 @@ public class ProductRestController {
         return new ProductDTO(product.getId(), product.getName(), product.getGroupProductId());
     }
 
-    //TODO @PutMapping("/")
     @PutMapping("/")
     public ProductDTO create(@Valid ProductDTO productDTO) throws Exception {
-        return new ProductDTO(1L, "NAME", 10L);
+        ProductEntity entity = productService.create(productDTO.getName(), productDTO.getGroupProductId());
+        return new ProductDTO(entity.getId(), entity.getName(), entity.getGroupProductId());
     }
 }
