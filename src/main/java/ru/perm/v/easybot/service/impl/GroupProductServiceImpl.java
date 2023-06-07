@@ -16,12 +16,12 @@ import static ru.perm.v.easybot.entity.EntityConsts.GROUP_PRODUCT_ID_NOT_FOUND;
 @Service
 public class GroupProductServiceImpl implements GroupProductService {
 
-    private GroupProductRepository repository;
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
+    private final GroupProductRepository repository;
 
-    public GroupProductServiceImpl(@Autowired GroupProductRepository repository) {
+    public GroupProductServiceImpl(@Autowired GroupProductRepository repository, @Autowired ProductService productService) {
         this.repository = repository;
+        this.productService = productService;
     }
 
     @Override
@@ -80,12 +80,15 @@ public class GroupProductServiceImpl implements GroupProductService {
     @Override
     public void delete(Long id) throws Exception {
         GroupProductEntity groupProduct = getById(id);
-        //TODO check product in group
+        // check product in group
         if (isProductsInGroup(groupProduct)) {
             throw new Exception(
                     String.format("Can't delete group id=%s, group=%s. There are products in the group or subgroup.", id, groupProduct.getName()));
         }
-        //TODO check subgroup in group
+        if(findByParentId(id).size() > 0) {
+            throw new Exception(
+                    String.format("Can't delete group id=%s, group=%s. There are subgroups in the group.", id, groupProduct.getName()));
+        }
         repository.delete(groupProduct);
     }
 

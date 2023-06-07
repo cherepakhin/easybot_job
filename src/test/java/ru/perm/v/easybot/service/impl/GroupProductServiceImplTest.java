@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ru.perm.v.easybot.entity.GroupProductEntity;
 import ru.perm.v.easybot.repository.GroupProductRepository;
 import ru.perm.v.easybot.service.GroupProductService;
+import ru.perm.v.easybot.service.ProductService;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ class GroupProductServiceImplTest {
 
     @Test
     void getAll() {
-        GroupProductService groupProductService = new GroupProductServiceImpl(repository);
+        GroupProductService groupProductService = new GroupProductServiceImpl(repository, null);
 
         List<GroupProductEntity> groups = groupProductService.getAll();
 
@@ -33,14 +34,14 @@ class GroupProductServiceImplTest {
 
     @Test
     void getById() throws Exception {
-        GroupProductService groupProductService = new GroupProductServiceImpl(repository);
+        GroupProductService groupProductService = new GroupProductServiceImpl(repository, null);
         GroupProductEntity groupProduct = groupProductService.getById(1L);
         assertEquals(1L, groupProduct.getId());
     }
 
     @Test
     void getByNotExistId() {
-        GroupProductService groupProductService = new GroupProductServiceImpl(repository);
+        GroupProductService groupProductService = new GroupProductServiceImpl(repository, null);
         try {
             groupProductService.getById(-100L);
         } catch (Exception e) {
@@ -53,7 +54,7 @@ class GroupProductServiceImplTest {
     void save() throws Exception {
         GroupProductRepository repository = mock(GroupProductRepository.class);
 
-        GroupProductService groupProductService = new GroupProductServiceImpl(repository);
+        GroupProductService groupProductService = new GroupProductServiceImpl(repository, null);
         when(repository.save(new GroupProductEntity(1L, "NAME_1", true, -100L)))
                 .thenReturn(new GroupProductEntity(1L, "NAME_1", true, -100L));
 
@@ -64,7 +65,6 @@ class GroupProductServiceImplTest {
         assertEquals(new GroupProductEntity(1L, "NAME_1", true, -100L), saved);
         verify(repository, times(1))
                 .save(new GroupProductEntity(1L, "NAME_1", true, -100L));
-
     }
 
 //    @Test
@@ -98,5 +98,46 @@ class GroupProductServiceImplTest {
         }
         // Computers, Monitors, Hard drives
         assertEquals(3, groups.size());
+    }
+
+    @Test
+    void exceptionOnDeleteGroupWithProducts() {
+        Long ID_DELETING_GROUP=100L;
+        GroupProductRepository repository = mock(GroupProductRepository.class);
+
+        GroupProductService groupProductService = new GroupProductServiceImpl(repository, null);
+        when(repository.findByParentIdOrderByParentIdAsc(ID_DELETING_GROUP))
+                .thenReturn(List.of(new GroupProductEntity()));
+
+        boolean isError = true;
+        try {
+            groupProductService.delete(ID_DELETING_GROUP);
+        } catch (Exception e) {
+            isError = false;
+        }
+        assertFalse(isError);
+        verify(repository, times(1))
+                .getById(ID_DELETING_GROUP);
+    }
+
+    @Test
+    void exceptionOnDeleteGroupWithSubGroups() {
+        Long ID_DELETING_GROUP=100L;
+        GroupProductRepository repository = mock(GroupProductRepository.class);
+        ProductService productService = mock(ProductService.class);
+
+        GroupProductService groupProductService = new GroupProductServiceImpl(repository, productService);
+        when(repository.findByParentIdOrderByParentIdAsc(ID_DELETING_GROUP))
+                .thenReturn(List.of(new GroupProductEntity()));
+
+        boolean isError = true;
+        try {
+            groupProductService.delete(ID_DELETING_GROUP);
+        } catch (Exception e) {
+            isError = false;
+        }
+        assertFalse(isError);
+        verify(repository, times(1))
+                .getById(ID_DELETING_GROUP);
     }
 }
