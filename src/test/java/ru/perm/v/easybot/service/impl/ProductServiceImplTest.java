@@ -8,11 +8,10 @@ import ru.perm.v.easybot.service.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class ProductServiceImplTest {
 
@@ -24,7 +23,7 @@ class ProductServiceImplTest {
         Long ID = 10L;
         ProductEntity product = new ProductEntity();
         product.setId(ID);
-        when(repository.getById(ID)).thenReturn(product);
+        when(repository.findById(ID)).thenReturn(Optional.of(product));
         try {
             product = productService.getById(ID);
         } catch (Exception e) {

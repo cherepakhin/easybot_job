@@ -20,7 +20,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductEntity getById(Long id) throws Exception {
-        return repository.getById(id);
+        return repository.findById(id).orElseThrow(
+                () -> new Exception(String.format("Not found product with %s", id)));
     }
 
     @Override
@@ -35,8 +36,27 @@ public class ProductServiceImpl implements ProductService {
         return repository.save(product);
     }
 
+    @Override
+    // TODO update Long id, String name, Long groupId
+    public ProductEntity update(Long id, String name, Long groupId) throws Exception {
+        return null;
+    }
+
+    @Override
+    // TODO update ProductEntity product
+    public ProductEntity update(ProductEntity product) throws Exception {
+        return null;
+    }
+
+    @Override
+    public void delete(Long id) throws Exception {
+        getById(id); // check for exist
+        repository.deleteById(id);
+    }
+
     /**
      * Get products by ID group.
+     *
      * @param idGroup - ID group product
      * @return list products in group
      */
