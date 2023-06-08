@@ -101,6 +101,14 @@ Transfer-Encoding: chunked
 "id": 31,
 "name": "Desktop1"
 }
+# stop docker app
+$docker stop 1f4
+
+# clear images
+$docker image prune -a
+
+# clear all
+$docker system prune -af
 ````
 
 ### TODO
