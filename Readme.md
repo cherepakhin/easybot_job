@@ -101,7 +101,7 @@ Transfer-Encoding: chunked
 "id": 31,
 "name": "Desktop1"
 }
-
+# stop docker app
 $docker stop 1f4
 ````
 
