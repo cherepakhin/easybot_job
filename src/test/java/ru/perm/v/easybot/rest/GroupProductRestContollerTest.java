@@ -56,6 +56,23 @@ class GroupProductRestContollerTest {
 
         doThrow(new Exception()).when(groupProductService).delete(ID);
 
-        assertThrows(Exception.class,() -> contoller.delete(ID));
+        assertThrows(Exception.class, () -> contoller.delete(ID));
+    }
+
+    @Test
+    void create() throws Exception {
+        Long ID = 1L;
+        String NAME = "NAME_1";
+        Long PARENT_ID = 1L;
+        Boolean IS_LAST = true;
+        GroupProductService groupProductService = mock(GroupProductService.class);
+        GroupProductEntity groupProduct = new GroupProductEntity(ID, NAME, IS_LAST, PARENT_ID);
+
+        when(groupProductService.create(NAME, PARENT_ID, IS_LAST)).thenReturn(groupProduct);
+        GroupProductRestContoller contoller = new GroupProductRestContoller(groupProductService);
+
+        GroupProductDTO dto = contoller.create(NAME, PARENT_ID, IS_LAST);
+
+        assertEquals(new GroupProductDTO(ID, NAME, PARENT_ID, IS_LAST), dto);
     }
 }
