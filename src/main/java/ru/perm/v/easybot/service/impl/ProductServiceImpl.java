@@ -57,6 +57,7 @@ public class ProductServiceImpl implements ProductService {
 
     /**
      * Get products by ID group.
+     * Sort by ID.
      *
      * @param idGroup - ID group product
      * @return list products in group
