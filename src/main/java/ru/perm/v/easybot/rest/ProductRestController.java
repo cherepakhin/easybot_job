@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.perm.v.easybot.dto.ProductDTO;
 import ru.perm.v.easybot.entity.ProductEntity;
+import ru.perm.v.easybot.rest.excpt.BadRequestException;
 import ru.perm.v.easybot.service.ProductService;
 
 import javax.validation.Valid;
@@ -35,7 +36,9 @@ public class ProductRestController {
     public ProductDTO getById(@PathVariable Long id) throws Exception {
         ProductEntity entity = productService.getById(id);
         if (entity == null) {
-            throw new Exception(String.format("Product not found id=%s", id));
+            String err = String.format("Product not found id=%s", id);
+            log.error(err);
+            throw new BadRequestException(err);
         }
         return new ProductDTO(entity.getId(), entity.getName(), entity.getGroupProductId());
     }
