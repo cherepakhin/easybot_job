@@ -4,7 +4,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.perm.v.easybot.dto.ProductDTO;
 import ru.perm.v.easybot.entity.ProductEntity;
@@ -18,11 +17,11 @@ import java.util.stream.Collectors;
 /**
  * TODO 3. Просмотр всех существующих товаров по группе
  * TODO 5. Добавить cache
+ * TODO Если успею, то добавить spring.Validator
  */
 @RestController
 @RequestMapping("/product")
 @Slf4j
-@Validated
 @Api(tags = "product-api")
 public class ProductRestController {
     private ProductService productService;
@@ -55,7 +54,8 @@ public class ProductRestController {
 
     @PostMapping(value = "/", consumes = "application/json", produces = "application/json")
     @ApiOperation("Save ProductDTO")
-    public ProductDTO save(@Valid @RequestBody ProductDTO productDTO) throws Exception {
+    public ProductDTO save(@RequestBody ProductDTO productDTO) throws Exception {
+
         ProductEntity product =
                 productService.update(productDTO.getId(), productDTO.getName(), productDTO.getGroupProductId());
         // используется именно такой конструктор (не new ProductDTO(productEntity),
