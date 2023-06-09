@@ -2,6 +2,7 @@ package ru.perm.v.easybot.dto;
 
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
@@ -10,6 +11,7 @@ public class ProductDTO {
     @NotNull
     private Long id = -1L;
     @NotNull
+    @NotEmpty
     private String name = "";
     @NotNull
     private Long groupProductId = -1L;
