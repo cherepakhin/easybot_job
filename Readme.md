@@ -117,6 +117,12 @@ $docker image prune -a
 $docker system prune -af
 ````
 
+### Интеграционное тестирование REST
+
+Проект с тестами [https://github.com/cherepakhin/easybot_job_test](.https://github.com/cherepakhin/easybot_job_test)
+
+![allure-report.png](doc/allure-report.png)
+
 ### TODO
 
 Провести behave тестирование с помощью RestAssured<br/>
