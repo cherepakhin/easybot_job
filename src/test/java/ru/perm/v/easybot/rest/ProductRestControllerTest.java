@@ -3,12 +3,14 @@ package ru.perm.v.easybot.rest;
 import org.junit.jupiter.api.Test;
 import ru.perm.v.easybot.dto.ProductDTO;
 import ru.perm.v.easybot.entity.ProductEntity;
+import ru.perm.v.easybot.rest.excpt.BadRequestException;
 import ru.perm.v.easybot.service.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -145,5 +147,21 @@ class ProductRestControllerTest {
         assertEquals(ID_2, returnedProducts.get(1).getId());
         assertEquals("NAME_" + ID_2, returnedProducts.get(1).getName());
         assertEquals(GROUP_ID, returnedProducts.get(1).getGroupProductId());
+    }
+
+    @Test
+    void vaildateProductDTO() {
+        ProductRestController controller = new ProductRestController(null);
+        Long ID = 1L;
+        String NAME = "";
+        Long GROUP_ID = 100L;
+        ProductDTO dto = new ProductDTO(ID, NAME, GROUP_ID);
+        Boolean testOk = false;
+        try {
+            controller.vaildateProductDTO(dto);
+        } catch (Exception e) {
+            testOk = true;
+        }
+        assertTrue(testOk);
     }
 }

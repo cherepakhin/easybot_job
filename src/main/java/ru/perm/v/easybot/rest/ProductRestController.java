@@ -89,7 +89,7 @@ public class ProductRestController {
                 .collect(Collectors.toList());
     }
 
-    protected void vaildateProductDTO(ProductDTO productDTO) {
+    protected void vaildateProductDTO(ProductDTO productDTO) throws BadRequestException {
         ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
         Validator validator = validatorFactory.usingContext().getValidator();
         Set<ConstraintViolation<ProductDTO>> validates = validator.validate(productDTO);
