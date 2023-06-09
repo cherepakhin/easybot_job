@@ -17,5 +17,6 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
     @Query(value = "SELECT max(id) FROM ProductEntity")
     Long getMaxId();
+
     List<ProductEntity> findByGroupProductIdOrderByIdAsc(Long groupId);
 }

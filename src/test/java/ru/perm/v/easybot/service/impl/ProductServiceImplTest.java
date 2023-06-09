@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
 class ProductServiceImplTest {
@@ -104,5 +105,28 @@ class ProductServiceImplTest {
         assertEquals(GROUP_ID, returnedProduct.getGroupProductId());
 
         verify(repository, times(1)).findById(ID);
+    }
+
+    @Test
+    void getByIdGroupProduct() {
+        Long GROUP_ID = 10L;
+
+        Long ID_1 = 1L;
+        String NAME_1 = "NAME_1";
+        ProductEntity product1 = new ProductEntity(ID_1, NAME_1, GROUP_ID);
+        Long ID_2 = 2L;
+        String NAME_2 = "NAME_2";
+        ProductEntity product2 = new ProductEntity(ID_2, NAME_2, GROUP_ID);
+
+        when(repository.findByGroupProductIdOrderByIdAsc(GROUP_ID)).thenReturn(List.of(product1, product2));
+
+        ProductService productService = new ProductServiceImpl(repository);
+
+        List<ProductEntity> products = productService.getByIdGroupProduct(GROUP_ID);
+
+        assertEquals(2, products.size());
+
+        assertEquals(new ProductEntity(ID_1, NAME_1, GROUP_ID), products.get(0));
+        assertEquals(new ProductEntity(ID_2, NAME_2, GROUP_ID), products.get(1));
     }
 }
