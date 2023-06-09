@@ -3,7 +3,10 @@ package ru.perm.v.easybot.rest.validators;
 import org.junit.jupiter.api.Test;
 import ru.perm.v.easybot.dto.ProductDTO;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ValidatorProductDtoTest {
 
@@ -12,7 +15,8 @@ class ValidatorProductDtoTest {
         ValidatorProductDto validator = new ValidatorProductDto();
         ProductDTO dto = new ProductDTO();
         dto.setName("");
-        String err = validator.validate(dto);
-        assertEquals("ProductDTO{id=-1, name='', groupProductId=-1}. Errors: field: name, error: не должно быть пустым\n", err);
+        List<String> errors = validator.validate(dto);
+        assertTrue(errors.size() > 0);
+        assertEquals("field: name, error: не должно быть пустым\n", errors.get(0));
     }
 }

@@ -54,9 +54,9 @@ public class ProductRestController {
     @PostMapping(value = "/", consumes = "application/json", produces = "application/json")
     @ApiOperation("Save ProductDTO")
     public ProductDTO save(@RequestBody ProductDTO productDTO) throws Exception {
-        String err = validator.validate(productDTO);
-        if (err.length() != 0) {
-            throw new BadRequestException(err);
+        List<String> errors = validator.validate(productDTO);
+        if (errors.size() > 0) {
+            throw new BadRequestException(errors.stream().collect(Collectors.joining()));
         }
         ProductEntity product =
                 productService.update(productDTO.getId(), productDTO.getName(), productDTO.getGroupProductId());
@@ -68,9 +68,10 @@ public class ProductRestController {
     @PutMapping("/")
     @ApiOperation("Create ProductDTO")
     public ProductDTO create(@RequestBody ProductDTO productDTO) throws Exception {
-        String err = validator.validate(productDTO);
-        if (err.length() != 0) {
-            throw new BadRequestException(err);
+        List<String> errors = validator.validate(productDTO);
+        if (errors.size() > 0) {
+            String errorMes = String.format("Product not created %s, Errors: %s", productDTO, errors.stream().collect(Collectors.joining()));
+            throw new BadRequestException(errorMes);
         }
         ProductEntity entity = productService.create(productDTO.getName(), productDTO.getGroupProductId());
         if (entity == null) {
