@@ -15,9 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * TODO 3. Просмотр всех существующих товаров по группе
  * TODO 5. Добавить cache
- * TODO Если успею, то добавить spring.Validator
  */
 @RestController
 @RequestMapping("/product")
@@ -90,18 +88,4 @@ public class ProductRestController {
                 .map(p -> new ProductDTO(p.getId(), p.getName(), p.getGroupProductId()))
                 .collect(Collectors.toList());
     }
-
-//    protected Boolean vaildateProductDTO(ProductDTO productDTO) throws BadRequestException {
-//        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
-//        Validator validator = validatorFactory.usingContext().getValidator();
-//        Set<ConstraintViolation<ProductDTO>> validates = validator.validate(productDTO);
-//        if (validates.size() > 0) {
-//            String err = String.format("%s. Errors: ", productDTO.toString());
-//            List<ConstraintViolation<ProductDTO>> errors = validates.stream().collect(Collectors.toList());
-//            for (ConstraintViolation<ProductDTO> validateErr : errors) {
-//                err = err + String.format("field: %s, error: %s\n", validateErr.getPropertyPath(), validateErr.getMessage());
-//            }
-//            throw new BadRequestException(err);
-//        }
-//    }
 }
