@@ -16,12 +16,12 @@ public class ValidatorProductDto {
         Validator validator = validatorFactory.usingContext().getValidator();
         Set<ConstraintViolation<ProductDTO>> validates = validator.validate(dto);
         if (validates.size() > 0) {
-            String err = String.format("%s. Errors: ", dto.toString());
+            StringBuilder err = new StringBuilder(String.format("%s. Errors: ", dto.toString()));
             List<ConstraintViolation<ProductDTO>> errors = validates.stream().collect(Collectors.toList());
             for (ConstraintViolation<ProductDTO> validateErr : errors) {
-                err = err + String.format("field: %s, error: %s\n", validateErr.getPropertyPath(), validateErr.getMessage());
+                err.append(String.format("field: %s, error: %s\n", validateErr.getPropertyPath(), validateErr.getMessage()));
             }
-            return err;
+            return err.toString();
         }
         return "";
     }
