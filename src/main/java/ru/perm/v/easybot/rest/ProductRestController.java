@@ -67,6 +67,11 @@ public class ProductRestController {
     @ApiOperation("Create ProductDTO")
     public ProductDTO create(@Valid @RequestBody ProductDTO productDTO) throws Exception {
         ProductEntity entity = productService.create(productDTO.getName(), productDTO.getGroupProductId());
+        if (entity == null) {
+            String err = String.format("Product not created dto=%s", productDTO);
+            log.error(err);
+            throw new BadRequestException(err);
+        }
         return new ProductDTO(entity.getId(), entity.getName(), entity.getGroupProductId());
     }
 
