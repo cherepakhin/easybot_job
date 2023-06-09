@@ -10,8 +10,12 @@ import ru.perm.v.easybot.entity.ProductEntity;
 import ru.perm.v.easybot.rest.excpt.BadRequestException;
 import ru.perm.v.easybot.service.ProductService;
 
-import javax.validation.Valid;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -25,6 +29,7 @@ import java.util.stream.Collectors;
 @Api(tags = "product-api")
 public class ProductRestController {
     private ProductService productService;
+//    private ProductDTOValidator validator = new ProductDTOValidator();
 
     public ProductRestController(@Autowired ProductService productService) {
         this.productService = productService;
@@ -55,7 +60,7 @@ public class ProductRestController {
     @PostMapping(value = "/", consumes = "application/json", produces = "application/json")
     @ApiOperation("Save ProductDTO")
     public ProductDTO save(@RequestBody ProductDTO productDTO) throws Exception {
-
+        vaildateProductDTO(productDTO);
         ProductEntity product =
                 productService.update(productDTO.getId(), productDTO.getName(), productDTO.getGroupProductId());
         // используется именно такой конструктор (не new ProductDTO(productEntity),
@@ -65,7 +70,8 @@ public class ProductRestController {
 
     @PutMapping("/")
     @ApiOperation("Create ProductDTO")
-    public ProductDTO create(@Valid @RequestBody ProductDTO productDTO) throws Exception {
+    public ProductDTO create(@RequestBody ProductDTO productDTO) throws Exception {
+        vaildateProductDTO(productDTO);
         ProductEntity entity = productService.create(productDTO.getName(), productDTO.getGroupProductId());
         if (entity == null) {
             String err = String.format("Product not created dto=%s", productDTO);
@@ -77,10 +83,23 @@ public class ProductRestController {
 
     @GetMapping("/groupId/{groupId}")
     @ApiOperation("Get ProductDTO by GroupId")
-    public List<ProductDTO> getByGroupId(@PathVariable Long groupId) throws Exception {
+    public List<ProductDTO> getByGroupId(@PathVariable Long groupId) {
         return productService.getByIdGroupProduct(groupId).stream()
                 .map(p -> new ProductDTO(p.getId(), p.getName(), p.getGroupProductId()))
                 .collect(Collectors.toList());
     }
 
+    protected void vaildateProductDTO(ProductDTO productDTO) {
+        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+        Validator validator = validatorFactory.usingContext().getValidator();
+        Set<ConstraintViolation<ProductDTO>> validates = validator.validate(productDTO);
+        if (validates.size() > 0) {
+            String err = String.format("%s. Errors: ", productDTO.toString());
+            List<ConstraintViolation<ProductDTO>> errors = validates.stream().collect(Collectors.toList());
+            for (ConstraintViolation<ProductDTO> validateErr : errors) {
+                err = err + String.format("field: %s, error: %s\n", validateErr.getPropertyPath(), validateErr.getMessage());
+            }
+            throw new BadRequestException(err);
+        }
+    }
 }

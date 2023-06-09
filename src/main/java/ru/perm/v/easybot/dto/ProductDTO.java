@@ -63,4 +63,13 @@ public class ProductDTO {
     public int hashCode() {
         return Objects.hash(id, name, groupProductId);
     }
+
+    @Override
+    public String toString() {
+        return "ProductDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", groupProductId=" + groupProductId +
+                '}';
+    }
 }
