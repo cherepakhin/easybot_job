@@ -119,6 +119,8 @@ $docker system prune -af
 
 ### TODO
 
-Провести behave тестирование с помощью RestAssured<br/> 
+Провести behave тестирование с помощью RestAssured<br/>
 
-
+Можно использовать другой вариант группировки продуктов, НЕ ПРИСОЕДИНЯЯ продукт к ГРУППЕ. Группа содержит поисковый
+запрос к описанию товара. Что-то типа "where description_product like '%монитор%' and description_product like '%20
+дюймов%' " 
