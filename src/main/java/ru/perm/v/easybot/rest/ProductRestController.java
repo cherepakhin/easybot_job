@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * TODO 3. Просмотр всех существующих товаров по типу
+ * TODO 3. Просмотр всех существующих товаров по группе
  * TODO 5. Добавить cache
  */
 @RestController
@@ -62,7 +62,7 @@ public class ProductRestController {
 
     @PutMapping("/")
     @ApiOperation("Create ProductDTO")
-    public ProductDTO create(@Valid ProductDTO productDTO) throws Exception {
+    public ProductDTO create(@Valid @RequestBody ProductDTO productDTO) throws Exception {
         ProductEntity entity = productService.create(productDTO.getName(), productDTO.getGroupProductId());
         return new ProductDTO(entity.getId(), entity.getName(), entity.getGroupProductId());
     }
