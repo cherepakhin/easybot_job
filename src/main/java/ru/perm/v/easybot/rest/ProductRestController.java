@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.perm.v.easybot.dto.ProductDTO;
 import ru.perm.v.easybot.entity.ProductEntity;
 import ru.perm.v.easybot.rest.excpt.BadRequestException;
+import ru.perm.v.easybot.rest.validators.ValidatorProductDto;
 import ru.perm.v.easybot.service.ProductService;
 
 import javax.validation.ConstraintViolation;
@@ -29,7 +30,7 @@ import java.util.stream.Collectors;
 @Api(tags = "product-api")
 public class ProductRestController {
     private ProductService productService;
-//    private ProductDTOValidator validator = new ProductDTOValidator();
+    private ValidatorProductDto validator = new ValidatorProductDto();
 
     public ProductRestController(@Autowired ProductService productService) {
         this.productService = productService;
@@ -60,7 +61,10 @@ public class ProductRestController {
     @PostMapping(value = "/", consumes = "application/json", produces = "application/json")
     @ApiOperation("Save ProductDTO")
     public ProductDTO save(@RequestBody ProductDTO productDTO) throws Exception {
-        vaildateProductDTO(productDTO);
+        String err = validator.validate(productDTO);
+        if (err.length() != 0) {
+            throw new BadRequestException(err);
+        }
         ProductEntity product =
                 productService.update(productDTO.getId(), productDTO.getName(), productDTO.getGroupProductId());
         // используется именно такой конструктор (не new ProductDTO(productEntity),
@@ -71,12 +75,15 @@ public class ProductRestController {
     @PutMapping("/")
     @ApiOperation("Create ProductDTO")
     public ProductDTO create(@RequestBody ProductDTO productDTO) throws Exception {
-        vaildateProductDTO(productDTO);
+        String err = validator.validate(productDTO);
+        if (err.length() != 0) {
+            throw new BadRequestException(err);
+        }
         ProductEntity entity = productService.create(productDTO.getName(), productDTO.getGroupProductId());
         if (entity == null) {
-            String err = String.format("Product not created dto=%s", productDTO);
-            log.error(err);
-            throw new BadRequestException(err);
+            String errEntityMes = String.format("Product not created dto=%s", productDTO);
+            log.error(errEntityMes);
+            throw new BadRequestException(errEntityMes);
         }
         return new ProductDTO(entity.getId(), entity.getName(), entity.getGroupProductId());
     }
@@ -89,17 +96,17 @@ public class ProductRestController {
                 .collect(Collectors.toList());
     }
 
-    protected void vaildateProductDTO(ProductDTO productDTO) throws BadRequestException {
-        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
-        Validator validator = validatorFactory.usingContext().getValidator();
-        Set<ConstraintViolation<ProductDTO>> validates = validator.validate(productDTO);
-        if (validates.size() > 0) {
-            String err = String.format("%s. Errors: ", productDTO.toString());
-            List<ConstraintViolation<ProductDTO>> errors = validates.stream().collect(Collectors.toList());
-            for (ConstraintViolation<ProductDTO> validateErr : errors) {
-                err = err + String.format("field: %s, error: %s\n", validateErr.getPropertyPath(), validateErr.getMessage());
-            }
-            throw new BadRequestException(err);
-        }
-    }
+//    protected Boolean vaildateProductDTO(ProductDTO productDTO) throws BadRequestException {
+//        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+//        Validator validator = validatorFactory.usingContext().getValidator();
+//        Set<ConstraintViolation<ProductDTO>> validates = validator.validate(productDTO);
+//        if (validates.size() > 0) {
+//            String err = String.format("%s. Errors: ", productDTO.toString());
+//            List<ConstraintViolation<ProductDTO>> errors = validates.stream().collect(Collectors.toList());
+//            for (ConstraintViolation<ProductDTO> validateErr : errors) {
+//                err = err + String.format("field: %s, error: %s\n", validateErr.getPropertyPath(), validateErr.getMessage());
+//            }
+//            throw new BadRequestException(err);
+//        }
+//    }
 }

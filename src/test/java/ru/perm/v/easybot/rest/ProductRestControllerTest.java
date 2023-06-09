@@ -148,20 +148,4 @@ class ProductRestControllerTest {
         assertEquals("NAME_" + ID_2, returnedProducts.get(1).getName());
         assertEquals(GROUP_ID, returnedProducts.get(1).getGroupProductId());
     }
-
-    @Test
-    void vaildateProductDTO() {
-        ProductRestController controller = new ProductRestController(null);
-        Long ID = 1L;
-        String NAME = "";
-        Long GROUP_ID = 100L;
-        ProductDTO dto = new ProductDTO(ID, NAME, GROUP_ID);
-        Boolean testOk = false;
-        try {
-            controller.vaildateProductDTO(dto);
-        } catch (Exception e) {
-            testOk = true;
-        }
-        assertTrue(testOk);
-    }
 }
