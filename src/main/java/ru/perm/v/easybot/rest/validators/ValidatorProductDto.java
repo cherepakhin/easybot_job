@@ -1,7 +1,6 @@
 package ru.perm.v.easybot.rest.validators;
 
 import ru.perm.v.easybot.dto.ProductDTO;
-import ru.perm.v.easybot.rest.excpt.BadRequestException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;

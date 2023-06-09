@@ -11,12 +11,7 @@ import ru.perm.v.easybot.rest.excpt.BadRequestException;
 import ru.perm.v.easybot.rest.validators.ValidatorProductDto;
 import ru.perm.v.easybot.service.ProductService;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
