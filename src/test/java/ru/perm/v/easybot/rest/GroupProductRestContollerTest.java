@@ -95,7 +95,6 @@ class GroupProductRestContollerTest {
 //        when(groupProductService.create(NAME_NEW, PARENT_ID, IS_LAST)).thenReturn(groupProductNew);
 
         GroupProductEntity groupProductNew = new GroupProductEntity(ID, NAME_NEW, IS_LAST, PARENT_ID);
-        when(mockGroupProductService.save(groupProductNew)).thenReturn(groupProductNew);
         when(mockGroupProductService.save(ID, NAME_NEW, PARENT_ID, IS_LAST)).thenReturn(groupProductNew);
 
         GroupProductRestContoller contoller = new GroupProductRestContoller(mockGroupProductService);
