@@ -63,6 +63,6 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public List<ProductEntity> getByIdGroupProduct(Long idGroup) {
-        return repository.findAll();
+        return repository.findByGroupProductIdOrderByIdAsc(idGroup);
     }
 }
