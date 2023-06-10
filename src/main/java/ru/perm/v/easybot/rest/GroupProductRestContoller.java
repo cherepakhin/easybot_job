@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.perm.v.easybot.dto.GroupProductDTO;
@@ -29,6 +30,7 @@ public class GroupProductRestContoller {
     //TODO: Add cache
     @GetMapping("/")
     @ApiOperation("Get all GroupProductDTO ")
+    @Cacheable("group_product")
     public List<GroupProductDTO> getAll() {
         List<GroupProductEntity> entities = groupProductService.getAll();
         return entities.stream().map(entity ->
@@ -39,6 +41,7 @@ public class GroupProductRestContoller {
     //TODO: Add cache
     @GetMapping("/{id}")
     @ApiOperation("Get GroupProductDTO by id")
+    @Cacheable("group_product")
     public GroupProductDTO getById(@PathVariable("id") Long id) {
         GroupProductEntity entity = null;
         try {
