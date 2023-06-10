@@ -43,6 +43,7 @@ public class GroupProductRestContoller {
     @ApiOperation("Get GroupProductDTO by id")
     @Cacheable("group_product")
     public GroupProductDTO getById(@PathVariable("id") Long id) {
+        log.info(String.format("GET GroupProductDTO id=%s", id));
         GroupProductEntity entity = null;
         try {
             entity = groupProductService.getById(id);
@@ -56,6 +57,7 @@ public class GroupProductRestContoller {
     @PostMapping("/")
     @ApiOperation("Create GroupProductDTO")
     public GroupProductDTO create(String name, Long parentId, Boolean isLast) {
+        log.info(String.format("Create GroupProductDTO name=%s, parentId=%s", name, parentId));
         GroupProductEntity entity = null;
         try {
             entity = groupProductService.create(name, parentId, isLast);
@@ -71,6 +73,7 @@ public class GroupProductRestContoller {
     @PostMapping("/{id}")
     @ApiOperation("Upadte GroupProductDTO")
     public GroupProductDTO update(@PathVariable("id") Long id, String name, Long parentId, Boolean isLast) {
+        log.info(String.format("Update GroupProductDTO id=%s, name=%s, parentId=%s", id, name, parentId));
         GroupProductEntity entity = null;
         try {
             groupProductService.getById(id);
