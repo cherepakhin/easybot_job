@@ -68,8 +68,8 @@ class GroupProductServiceImplIntegrationTest {
 //        verify(repository, times(1)).getMaxId();
 //    }
 
+    // only for demo, study, check etc
     @Test
-        // only for demo, study, check etc
     void findByParentId(@Autowired GroupProductRepository repository) {
         Long ID = 1L;
         List<GroupProductEntity> groups = repository.findByParentIdOrderByParentIdAscIdAsc(ID);
