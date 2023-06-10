@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
-class ProductServiceImplTest {
+class ProductServiceImplMockTest {
 
     ProductRepository repository = mock(ProductRepository.class);
 
