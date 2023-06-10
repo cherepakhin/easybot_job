@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class ProductRepositoryTest {
+class ProductRepositoryIntegrationTest {
 
     @Autowired
     public ProductRepository repository;

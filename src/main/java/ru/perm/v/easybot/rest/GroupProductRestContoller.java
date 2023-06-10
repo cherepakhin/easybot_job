@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.perm.v.easybot.dto.GroupProductDTO;
@@ -29,6 +30,7 @@ public class GroupProductRestContoller {
     //TODO: Add cache
     @GetMapping("/")
     @ApiOperation("Get all GroupProductDTO ")
+    @Cacheable("group_product")
     public List<GroupProductDTO> getAll() {
         List<GroupProductEntity> entities = groupProductService.getAll();
         return entities.stream().map(entity ->
@@ -39,7 +41,9 @@ public class GroupProductRestContoller {
     //TODO: Add cache
     @GetMapping("/{id}")
     @ApiOperation("Get GroupProductDTO by id")
+    @Cacheable("group_product")
     public GroupProductDTO getById(@PathVariable("id") Long id) {
+        log.info(String.format("GET GroupProductDTO id=%s", id));
         GroupProductEntity entity = null;
         try {
             entity = groupProductService.getById(id);
@@ -53,6 +57,7 @@ public class GroupProductRestContoller {
     @PostMapping("/")
     @ApiOperation("Create GroupProductDTO")
     public GroupProductDTO create(String name, Long parentId, Boolean isLast) {
+        log.info(String.format("Create GroupProductDTO name=%s, parentId=%s", name, parentId));
         GroupProductEntity entity = null;
         try {
             entity = groupProductService.create(name, parentId, isLast);
@@ -68,6 +73,7 @@ public class GroupProductRestContoller {
     @PostMapping("/{id}")
     @ApiOperation("Upadte GroupProductDTO")
     public GroupProductDTO update(@PathVariable("id") Long id, String name, Long parentId, Boolean isLast) {
+        log.info(String.format("Update GroupProductDTO id=%s, name=%s, parentId=%s", id, name, parentId));
         GroupProductEntity entity = null;
         try {
             groupProductService.getById(id);
