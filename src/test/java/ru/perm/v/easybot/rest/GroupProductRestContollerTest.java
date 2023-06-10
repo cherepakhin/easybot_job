@@ -56,6 +56,52 @@ class GroupProductRestContollerTest {
 
         doThrow(new Exception()).when(groupProductService).delete(ID);
 
-        assertThrows(Exception.class,() -> contoller.delete(ID));
+        assertThrows(Exception.class, () -> contoller.delete(ID));
     }
+
+    @Test
+    void create() throws Exception {
+        Long ID = 1L;
+        String NAME = "NAME_1";
+        Long PARENT_ID = 1L;
+        Boolean IS_LAST = true;
+        GroupProductService groupProductService = mock(GroupProductService.class);
+        GroupProductEntity groupProduct = new GroupProductEntity(ID, NAME, IS_LAST, PARENT_ID);
+
+        when(groupProductService.create(NAME, PARENT_ID, IS_LAST)).thenReturn(groupProduct);
+        GroupProductRestContoller contoller = new GroupProductRestContoller(groupProductService);
+
+        GroupProductDTO dto = contoller.create(NAME, PARENT_ID, IS_LAST);
+
+        assertEquals(new GroupProductDTO(ID, NAME, PARENT_ID, IS_LAST), dto);
+    }
+
+    @Test
+    void update() throws Exception {
+        Long ID = 1L;
+        String NAME_OLD = "NAME_OLD";
+        String NAME_NEW = "NAME_NEW";
+        Long PARENT_ID = 1L;
+        Boolean IS_LAST = true;
+
+        GroupProductService mockGroupProductService = mock(GroupProductService.class);
+
+        GroupProductEntity groupProductOld = new GroupProductEntity(ID, NAME_OLD, IS_LAST, PARENT_ID);
+        when(mockGroupProductService.getById(ID)).thenReturn(groupProductOld);
+
+        GroupProductEntity parentGroupProduct = new GroupProductEntity(PARENT_ID, "", false, -1L);
+        when(mockGroupProductService.getById(PARENT_ID)).thenReturn(parentGroupProduct);
+
+//        when(groupProductService.create(NAME_NEW, PARENT_ID, IS_LAST)).thenReturn(groupProductNew);
+
+        GroupProductEntity groupProductNew = new GroupProductEntity(ID, NAME_NEW, IS_LAST, PARENT_ID);
+        when(mockGroupProductService.save(ID, NAME_NEW, PARENT_ID, IS_LAST)).thenReturn(groupProductNew);
+
+        GroupProductRestContoller contoller = new GroupProductRestContoller(mockGroupProductService);
+
+        GroupProductDTO dto = contoller.update(ID, NAME_NEW, PARENT_ID, IS_LAST);
+
+        assertEquals(new GroupProductDTO(ID, NAME_NEW, PARENT_ID, IS_LAST), dto);
+    }
+
 }

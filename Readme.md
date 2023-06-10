@@ -35,6 +35,12 @@
 </ul>
 В качестве базы данных использовать in memory database, например H2. Для проверки результата, присылайте ссылку на репозиторий на GitHub, в котором размещен код проекта. В README.md файле репозитория должна быть подробная инструкция по запуску приложения.
 
+### Запуск
+
+````shell
+./mvnw spring-boot:run
+````
+
 ### Покрытие тестами
 
 Использован jacoco. Отчет генерируется автоматически при сборке (mvn package) и результаты будут в папке
@@ -67,8 +73,58 @@ Content-Type: application/json
 
 ![swagger](doc/swagger.png)
 
+### Actuator
+
+Доступен по адресу http://127.0.0.1:8780/api/actuator/
+
+![actuator](doc/actuator.png)
+
+### Создание Docker
+
+```shell
+# create docker image
+$./docker_build.sh
+
+# run app
+$ docker run -p 8080:8780 myorg/myapp
+
+$ docker ps
+CONTAINER ID   IMAGE         COMMAND                CREATED              STATUS              PORTS                                     NAMES
+1f472b2bea9e   myorg/myapp   "java -jar /app.jar"   About a minute ago   Up About a minute   0.0.0.0:8080->8080/tcp, :::8080->8080/tcp zen_shaw
+
+# test
+$ http GET 127.0.0.1:8080/api/product/31
+
+HTTP/1.1 200
+Connection: keep-alive
+Content-Type: application/json
+Date: Thu, 08 Jun 2023 13:20:25 GMT
+Keep-Alive: timeout=60
+Transfer-Encoding: chunked
+
+{
+"groupProductId": 3,
+"id": 31,
+"name": "Desktop1"
+}
+# stop docker app
+$docker stop 1f4
+
+# clear images
+$docker image prune -a
+
+# clear all
+$docker system prune -af
+````
+
+### Интеграционное тестирование REST
+
+Проект с тестами [https://github.com/cherepakhin/easybot_job_test](.https://github.com/cherepakhin/easybot_job_test)
+
+![allure-report.png](doc/allure-report.png)
+
 ### TODO
 
-OpenApi Провести behave тестирование с помощью RestAssured Actuator
-
-
+Можно использовать другой вариант группировки продуктов, НЕ ПРИСОЕДИНЯЯ продукт к ГРУППЕ. Группа содержит поисковый
+запрос к описанию товара. Что-то типа "where description_product like '%монитор%' and description_product like '%20
+дюймов%' ". Еще вариант использовать вертикальные БД.

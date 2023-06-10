@@ -1,0 +1,24 @@
+# create docker image
+$ ./docker_build.sh
+
+# run app
+$ docker run -p 8080:8780 myorg/myapp
+
+$ docker ps
+CONTAINER ID   IMAGE         COMMAND                CREATED              STATUS              PORTS                                     NAMES
+1f472b2bea9e   myorg/myapp   "java -jar /app.jar"   About a minute ago   Up About a minute   0.0.0.0:8080->8080/tcp, :::8080->8080/tcp zen_shaw
+
+$ http GET 127.0.0.1:8080/api/product/31
+
+HTTP/1.1 200
+Connection: keep-alive
+Content-Type: application/json
+Date: Thu, 08 Jun 2023 13:20:25 GMT
+Keep-Alive: timeout=60
+Transfer-Encoding: chunked
+
+{
+    "groupProductId": 3,
+    "id": 31,
+    "name": "Desktop1"
+}
