@@ -69,7 +69,8 @@ Content-Type: application/json
 
 ### Swagger
 
-Доступен по адресу http://localhost:8780/api/swagger-ui/index.html
+При запущенном приложении, доступен по адресу
+[http://localhost:8780/api/swagger-ui/index.html](http://localhost:8780/api/swagger-ui/index.html)
 
 ![swagger](doc/swagger.png)
 
