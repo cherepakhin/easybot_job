@@ -52,8 +52,6 @@ class GroupProductRestContollerTest {
     @Test
     void getByIdIfNull() throws Exception {
         Long ID = 1L;
-        String NAME = "NAME_1";
-        Long PARENT_ID = 1L;
         GroupProductService groupProductService = mock(GroupProductService.class);
 
         when(groupProductService.getById(ID)).thenReturn(null);
