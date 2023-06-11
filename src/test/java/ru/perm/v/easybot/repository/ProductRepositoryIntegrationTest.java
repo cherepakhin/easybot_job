@@ -3,6 +3,7 @@ package ru.perm.v.easybot.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 import ru.perm.v.easybot.entity.ProductEntity;
 
@@ -29,12 +30,15 @@ class ProductRepositoryIntegrationTest {
     }
 
     @Test
+//    Use for concrete test
+    @Sql({"/insert_desktop4.sql"})
     void findByGroupProductIdOrderByIdAsc() {
         List<ProductEntity> desktops = repository.findByGroupProductIdOrderByIdAsc(3L);
-        assertEquals(3, desktops.size());
+        assertEquals(4, desktops.size());
         assertEquals("Desktop1", desktops.get(0).getName());
         assertEquals("Desktop2", desktops.get(1).getName());
         assertEquals("Desktop3", desktops.get(2).getName());
+        assertEquals("Desktop4", desktops.get(3).getName());
     }
 
 
