@@ -19,4 +19,8 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     Long getMaxId();
 
     List<ProductEntity> findByGroupProductIdOrderByIdAsc(Long groupId);
+
+    @Query(value = "delete FROM ProductEntity where id not in (31,32,33,41,42,51,52,61,62)")
+    void reset();
+
 }

@@ -66,4 +66,9 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductEntity> getByIdGroupProduct(Long idGroup) {
         return repository.findByGroupProductIdOrderByIdAsc(idGroup);
     }
+
+    @Override
+    public void reset() {
+        repository.reset();
+    }
 }
