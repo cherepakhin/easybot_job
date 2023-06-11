@@ -50,6 +50,9 @@ public class GroupProductRestContoller {
         } catch (Exception e) {
             log.error(e.getMessage());
         }
+        if (entity == null) {
+            throw new ResourceNotFoundException(String.format("Product group with %s not found.", id));
+        }
         return new GroupProductDTO(entity.getId(), entity.getName(), entity.getParentId(), entity.getIsLast());
     }
 
