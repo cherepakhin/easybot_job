@@ -3,6 +3,7 @@ package ru.perm.v.easybot.rest;
 import org.junit.jupiter.api.Test;
 import ru.perm.v.easybot.dto.GroupProductDTO;
 import ru.perm.v.easybot.entity.GroupProductEntity;
+import ru.perm.v.easybot.rest.excpt.ResourceNotFoundException;
 import ru.perm.v.easybot.service.GroupProductService;
 
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ class GroupProductRestContollerTest {
         String NAME = "NAME_1";
         Long PARENT_ID = 1L;
         GroupProductService groupProductService = mock(GroupProductService.class);
-        GroupProductEntity groupProduct = new GroupProductEntity(ID, NAME, false,PARENT_ID);
+        GroupProductEntity groupProduct = new GroupProductEntity(ID, NAME, false, PARENT_ID);
 
         when(groupProductService.getById(ID)).thenReturn(groupProduct);
         GroupProductRestContoller contoller = new GroupProductRestContoller(groupProductService);
@@ -46,6 +47,16 @@ class GroupProductRestContollerTest {
         GroupProductDTO dto = contoller.getById(ID);
 
         assertEquals(new GroupProductDTO(ID, NAME, PARENT_ID, false), dto);
+    }
+
+    @Test
+    void getByIdIfNull() throws Exception {
+        Long ID = 1L;
+        GroupProductService groupProductService = mock(GroupProductService.class);
+
+        when(groupProductService.getById(ID)).thenReturn(null);
+        GroupProductRestContoller contoller = new GroupProductRestContoller(groupProductService);
+        assertThrows(ResourceNotFoundException.class, () -> contoller.getById(ID));
     }
 
     @Test
