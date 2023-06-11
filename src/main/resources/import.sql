@@ -13,7 +13,7 @@ insert into product(id, name, group_product_id) values (41, 'Notebook1', 4);
 insert into product(id, name, group_product_id) values (42, 'Notebook2', 4);
 insert into product(id, name, group_product_id) values (51, 'Monitor1', 5);
 insert into product(id, name, group_product_id) values (52, 'Monitor2', 5);
-insert into product(id, name, group_product_id) values (61, 'HDD1', 6);
-insert into product(id, name, group_product_id) values (62, 'HDD2', 6);
+--insert into product(id, name, group_product_id) values (61, 'HDD1', 6);
+--insert into product(id, name, group_product_id) values (62, 'HDD2', 6);
 COMMIT;
 

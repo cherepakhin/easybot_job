@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -27,10 +28,26 @@ public class GroupProductRestContoller {
     @Autowired
     private GroupProductService groupProductService;
 
-    //TODO: Add cache
+    /**
+     * Rest is work? Need for integration test.
+     *
+     * @return "Ok"
+     */
+    @GetMapping("/echo")
+    @ApiOperation("Simple echo for test")
+    public String echo() {
+        return "Ok";
+    }
+
+    @GetMapping("/evict/{id}")
+    @ApiOperation("Clear cache by id. ONLY FOR DEMO!")
+    @CacheEvict(value = "group_product")
+    public String evict(@PathVariable("id") Long id) {
+        return "Ok";
+    }
+
     @GetMapping("/")
     @ApiOperation("Get all GroupProductDTO ")
-    @Cacheable("group_product")
     public List<GroupProductDTO> getAll() {
         List<GroupProductEntity> entities = groupProductService.getAll();
         return entities.stream().map(entity ->
@@ -38,10 +55,9 @@ public class GroupProductRestContoller {
                 .collect(Collectors.toList());
     }
 
-    //TODO: Add cache
     @GetMapping("/{id}")
     @ApiOperation("Get GroupProductDTO by id")
-    @Cacheable("group_product")
+    @Cacheable(value = "group_product")
     public GroupProductDTO getById(@PathVariable("id") Long id) {
         log.info(String.format("GET GroupProductDTO id=%s", id));
         GroupProductEntity entity = null;
@@ -56,7 +72,6 @@ public class GroupProductRestContoller {
         return new GroupProductDTO(entity.getId(), entity.getName(), entity.getParentId(), entity.getIsLast());
     }
 
-    //TODO: Add clear cache
     @PostMapping("/")
     @ApiOperation("Create GroupProductDTO")
     public GroupProductDTO create(String name, Long parentId, Boolean isLast) {
@@ -72,9 +87,9 @@ public class GroupProductRestContoller {
         return new GroupProductDTO(entity.getId(), entity.getName(), entity.getParentId(), entity.getIsLast());
     }
 
-    //TODO: Add clear cache
     @PostMapping("/{id}")
     @ApiOperation("Upadte GroupProductDTO")
+    @CacheEvict(value = "group_product", key = "id")
     public GroupProductDTO update(@PathVariable("id") Long id, String name, Long parentId, Boolean isLast) {
         log.info(String.format("Update GroupProductDTO id=%s, name=%s, parentId=%s", id, name, parentId));
         GroupProductEntity entity = null;
@@ -102,26 +117,17 @@ public class GroupProductRestContoller {
         return new GroupProductDTO(entity.getId(), entity.getName(), entity.getParentId(), entity.getIsLast());
     }
 
-    //TODO: Add clear cache
-    @DeleteMapping("/")
+    @DeleteMapping("/{id}")
     @ApiOperation("Delete GroupProductDTO")
-    public void delete(Long id) {
+    @CacheEvict(value = "group_product")
+    public void delete(@PathVariable("id") Long id) {
+        log.info("Delete group product %s", id);
         try {
             groupProductService.delete(id);
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new Err500Exception(e.getMessage());
         }
-    }
-
-    /**
-     * Rest is work? Need for integration test.
-     * @return "Ok"
-     */
-    @GetMapping("/echo")
-    @ApiOperation("Simple echo for test")
-    public String echo() {
-        return "Ok";
     }
 
 }

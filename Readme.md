@@ -75,7 +75,7 @@ Content-Type: application/json
 
 ### Actuator
 
-Доступен по адресу http://127.0.0.1:8780/api/actuator/
+Доступен по адресу http://127.0.0.1:8788/api/actuator/
 
 ![actuator](doc/actuator.png)
 

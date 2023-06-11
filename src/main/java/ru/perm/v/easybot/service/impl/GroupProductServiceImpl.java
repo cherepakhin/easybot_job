@@ -1,9 +1,6 @@
 package ru.perm.v.easybot.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import ru.perm.v.easybot.entity.GroupProductEntity;
 import ru.perm.v.easybot.repository.GroupProductRepository;
@@ -27,9 +24,6 @@ public class GroupProductServiceImpl implements GroupProductService {
     }
 
     @Override
-    @Caching(evict = {
-            @CacheEvict(value = "group_product_cache", key = "#group_product.id")
-    })
     public GroupProductEntity create(String name, Long parentId, Boolean isLast) throws Exception {
         GroupProductEntity parent = getById(parentId);
         GroupProductEntity entity = new GroupProductEntity();
@@ -41,9 +35,6 @@ public class GroupProductServiceImpl implements GroupProductService {
     }
 
     @Override
-    @Caching(evict = {
-            @CacheEvict(value = "group_product_cache", key = "#id")
-    })
     public GroupProductEntity save(Long id, String name, Long parentId, Boolean isLast) throws Exception {
         if (id == null) {
             return create(name, parentId, isLast);
@@ -64,9 +55,6 @@ public class GroupProductServiceImpl implements GroupProductService {
     }
 
     @Override
-    @Caching(evict = {
-            @CacheEvict(value = "group_product_cache", key = "#groupProduct.id")
-    })
     public GroupProductEntity save(GroupProductEntity groupProduct) throws Exception {
         try {
             return repository.save(groupProduct);
@@ -81,7 +69,6 @@ public class GroupProductServiceImpl implements GroupProductService {
     }
 
     @Override
-    @Cacheable(value = "group_product_cache", key = "#id")
     public GroupProductEntity getById(Long id) throws Exception {
         GroupProductEntity groupProduct = repository.getById(id);
         if (groupProduct.getId().compareTo(GROUP_PRODUCT_ID_NOT_FOUND) == 0) {
@@ -91,9 +78,6 @@ public class GroupProductServiceImpl implements GroupProductService {
     }
 
 
-    @Caching(evict = {
-            @CacheEvict(value = "group_product_cache", key = "#id")
-    })
     @Override
     public void delete(Long id) throws Exception {
         GroupProductEntity groupProduct = getById(id);
@@ -109,7 +93,6 @@ public class GroupProductServiceImpl implements GroupProductService {
     }
 
     @Override
-    @Cacheable(value = "group_product_cache", key = "#id")
     public List<GroupProductEntity> findByParentId(Long id) {
         return repository.findByParentIdOrderByParentIdAsc(id);
     }
