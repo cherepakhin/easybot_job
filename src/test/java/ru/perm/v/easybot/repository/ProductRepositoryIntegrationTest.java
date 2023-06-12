@@ -30,15 +30,15 @@ class ProductRepositoryIntegrationTest {
     }
 
     @Test
-//  insert_desktop4.sql used for concrete this test
-    @Sql({"/insert_desktop4.sql"})
+//  insert_desktop34.sql used for concrete this test
+    @Sql({"/insert_desktop34.sql"})
     void findByGroupProductIdOrderByIdAsc() {
         List<ProductEntity> desktops = repository.findByGroupProductIdOrderByIdAsc(3L);
         assertEquals(4, desktops.size());
         assertEquals("Desktop1", desktops.get(0).getName());
         assertEquals("Desktop2", desktops.get(1).getName());
         assertEquals("Desktop3", desktops.get(2).getName());
-        assertEquals("Desktop4", desktops.get(3).getName());
+        assertEquals("Desktop34", desktops.get(3).getName());
     }
 
 }
