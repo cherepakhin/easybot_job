@@ -17,9 +17,6 @@ import ru.perm.v.easybot.service.ProductService;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * TODO 5. Добавить cache
- */
 @RestController
 @RequestMapping("/product")
 @Slf4j
@@ -34,7 +31,7 @@ public class ProductRestController {
 
     @GetMapping("/{id}")
     @ApiOperation("Get ProductDTO by id")
-    @Cacheable(value = "product")
+    @Cacheable(value = "product", key = "#id")
     public ProductDTO getById(@PathVariable Long id) throws Exception {
         ProductEntity entity = productService.getById(id);
         if (entity == null) {
