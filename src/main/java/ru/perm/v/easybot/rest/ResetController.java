@@ -37,8 +37,7 @@ public class ResetController {
     @GetMapping("/db")
     @ApiOperation("Reset database")
     public String resetDatabase() throws Exception {
-        productService.reset();
-        groupProductService.reset();
+        resetDBService.reset();
         return Ok;
     }
 
