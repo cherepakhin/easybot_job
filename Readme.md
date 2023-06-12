@@ -53,7 +53,21 @@
 Используется утилита httpie
 
 ```shell
->http GET :8780/api/product/31
+# test get
+$ http GET 127.0.0.1:8080/api/product/31
+
+HTTP/1.1 200
+Connection: keep-alive
+Content-Type: application/json
+
+{
+"groupProductId": 3,
+"id": 31,
+"name": "Desktop1"
+}
+
+# test update
+$ http POST 127.0.0.1:8780/api/product/ < src/test/product.json
 
 HTTP/1.1 200 
 Connection: keep-alive
@@ -62,7 +76,20 @@ Content-Type: application/json
 {
     "groupProductId": 3,
     "id": 31,
-    "name": "Desktop1"
+    "name": "Desktop31"
+}
+
+#test with error product 
+http POST 127.0.0.1:8780/api/product/ < src/test/product_err.json
+HTTP/1.1 500 
+Content-Type: application/json
+
+{
+    "error": "Internal Server Error",
+    "message": "Not found product with id=31000",
+    "path": "/api/product/",
+    "status": 500,
+    "timestamp": 1686547136081
 }
 
 ```
@@ -92,21 +119,6 @@ $ docker ps
 CONTAINER ID   IMAGE         COMMAND                CREATED              STATUS              PORTS                                     NAMES
 1f472b2bea9e   myorg/myapp   "java -jar /app.jar"   About a minute ago   Up About a minute   0.0.0.0:8080->8080/tcp, :::8080->8080/tcp zen_shaw
 
-# test
-$ http GET 127.0.0.1:8080/api/product/31
-
-HTTP/1.1 200
-Connection: keep-alive
-Content-Type: application/json
-Date: Thu, 08 Jun 2023 13:20:25 GMT
-Keep-Alive: timeout=60
-Transfer-Encoding: chunked
-
-{
-"groupProductId": 3,
-"id": 31,
-"name": "Desktop1"
-}
 # stop docker app
 $docker stop 1f4
 
