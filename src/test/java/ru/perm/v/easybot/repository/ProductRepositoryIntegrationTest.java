@@ -19,6 +19,7 @@ class ProductRepositoryIntegrationTest {
     public ProductRepository repository;
 
     @Test
+    @Sql({"/insert_desktop.sql"})
     void createProduct() {
         Long ID = repository.getMaxId() + 1;
         Long GROUP_ID = 3L;
@@ -30,15 +31,12 @@ class ProductRepositoryIntegrationTest {
     }
 
     @Test
-//  insert_desktop34.sql used for concrete this test
-    @Sql({"/insert_desktop34.sql"})
+    @Sql({"/insert_desktop.sql"})
     void findByGroupProductIdOrderByIdAsc() {
         List<ProductEntity> desktops = repository.findByGroupProductIdOrderByIdAsc(3L);
-        assertEquals(4, desktops.size());
-        assertEquals("Desktop1", desktops.get(0).getName());
-        assertEquals("Desktop2", desktops.get(1).getName());
-        assertEquals("Desktop3", desktops.get(2).getName());
-        assertEquals("Desktop34", desktops.get(3).getName());
+        assertEquals(2, desktops.size());
+        assertEquals("Desktop31", desktops.get(0).getName());
+        assertEquals("Desktop32", desktops.get(1).getName());
     }
 
 }
