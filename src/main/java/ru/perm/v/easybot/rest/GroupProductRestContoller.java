@@ -129,4 +129,10 @@ public class GroupProductRestContoller {
             throw new Err500Exception(e.getMessage());
         }
     }
+
+    @GetMapping("/reset")
+    @ApiOperation("Reset GrouProduct")
+    public void reset() {
+        groupProductService.reset();
+    }
 }

@@ -52,10 +52,14 @@ class GroupProductServiceImplIntegrationTest {
     }
 
     @Test
-    @Sql("/drop_all.sql")
-    void dropAll(@Autowired GroupProductRepository repository) {
+    void reset(@Autowired GroupProductRepository repository) {
         GroupProductService groupProductService = new GroupProductServiceImpl(repository, null);
-        assertEquals(0, groupProductService.getAll().size());
+        groupProductService.reset();
+
+        assertEquals(1, groupProductService.getAll().size());
+
+        GroupProductEntity group0 = groupProductService.getAll().get(0);
+        assertEquals(1L, group0.getId());
     }
 
     //    @Test

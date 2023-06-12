@@ -120,4 +120,9 @@ public class GroupProductServiceImpl implements GroupProductService {
         return productService.getByIdGroupProduct(groupProduct.getId()).size() > 0;
     }
 
+    @Override
+    public void reset() {
+        repository.reset();
+    }
+
 }

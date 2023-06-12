@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 import ru.perm.v.easybot.entity.GroupProductEntity;
 
@@ -21,4 +20,11 @@ public interface GroupProductRepository extends JpaRepository<GroupProductEntity
     List<GroupProductEntity> findByParentIdOrderByParentIdAsc(Long id);
 
     List<GroupProductEntity> findByParentIdOrderByParentIdAscIdAsc(Long id);
+
+    /**
+     * delete except ROOT with id=1 "IT products"
+     */
+    @Query(value = "delete FROM GroupProductEntity where ID>1")
+    @Modifying
+    void reset();
 }
