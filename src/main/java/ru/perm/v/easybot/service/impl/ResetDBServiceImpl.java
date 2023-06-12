@@ -25,6 +25,4 @@ public class ResetDBServiceImpl implements ResetDBService {
         productService.reset();
         groupProductService.reset();
     }
-
-    ;
 }
