@@ -9,8 +9,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.perm.v.easybot.service.GroupProductService;
-import ru.perm.v.easybot.service.ProductService;
 import ru.perm.v.easybot.service.ResetDBService;
 
 @RestController
@@ -22,12 +20,6 @@ import ru.perm.v.easybot.service.ResetDBService;
  * ONLY FOR INTEGRATION TESTS
  */
 public class ResetController {
-
-    @Autowired
-    private ProductService productService;
-
-    @Autowired
-    private GroupProductService groupProductService;
 
     @Autowired
     private ResetDBService resetDBService;
