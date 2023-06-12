@@ -39,6 +39,12 @@ public class GroupProductRestContoller {
         return "Ok";
     }
 
+    @GetMapping("/reset")
+    @ApiOperation("Reset GrouProduct")
+    public void reset() {
+        groupProductService.reset();
+    }
+
     @GetMapping("/evict/{id}")
     @ApiOperation("Clear cache by id. ONLY FOR DEMO!")
     @CacheEvict(value = "group_product", key = "#id")
@@ -128,11 +134,5 @@ public class GroupProductRestContoller {
             log.error(e.getMessage());
             throw new Err500Exception(e.getMessage());
         }
-    }
-
-    @GetMapping("/reset")
-    @ApiOperation("Reset GrouProduct")
-    public void reset() {
-        groupProductService.reset();
     }
 }

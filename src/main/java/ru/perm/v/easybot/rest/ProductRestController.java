@@ -29,6 +29,12 @@ public class ProductRestController {
         this.productService = productService;
     }
 
+    @GetMapping("/reset")
+    @ApiOperation("Reset products")
+    public void reset() {
+        productService.reset();
+    }
+
     @GetMapping("/{id}")
     @ApiOperation("Get ProductDTO by id")
     @Cacheable(value = "product", key = "#id")
