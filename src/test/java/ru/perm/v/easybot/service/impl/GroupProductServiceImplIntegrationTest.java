@@ -3,6 +3,7 @@ package ru.perm.v.easybot.service.impl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 import ru.perm.v.easybot.entity.GroupProductEntity;
 import ru.perm.v.easybot.repository.GroupProductRepository;
 import ru.perm.v.easybot.service.GroupProductService;
@@ -16,6 +17,7 @@ class GroupProductServiceImplIntegrationTest {
 
 
     @Test
+    @Sql("/import_for_test_group.sql")
     void getAll(@Autowired GroupProductRepository repository) {
 
         GroupProductService groupProductService = new GroupProductServiceImpl(repository, null);
@@ -30,6 +32,7 @@ class GroupProductServiceImplIntegrationTest {
     }
 
     @Test
+    @Sql("/import_for_test_group.sql")
     void getById(@Autowired GroupProductRepository repository) throws Exception {
         GroupProductService groupProductService = new GroupProductServiceImpl(repository, null);
         GroupProductEntity groupProduct = groupProductService.getById(1L);
@@ -37,6 +40,7 @@ class GroupProductServiceImplIntegrationTest {
     }
 
     @Test
+    @Sql("/import_for_test_group.sql")
     void getByNotExistId(@Autowired GroupProductRepository repository) {
         GroupProductService groupProductService = new GroupProductServiceImpl(repository, null);
         try {
@@ -47,7 +51,14 @@ class GroupProductServiceImplIntegrationTest {
         assertFalse(false);
     }
 
-//    @Test
+    @Test
+    @Sql("/drop_all.sql")
+    void dropAll(@Autowired GroupProductRepository repository) {
+        GroupProductService groupProductService = new GroupProductServiceImpl(repository, null);
+        assertEquals(0, groupProductService.getAll().size());
+    }
+
+    //    @Test
 //    void create() {
 //        GroupProductRepository repository = mock(GroupProductRepository.class);
 //        Long MAX_ID = 10L;
@@ -70,6 +81,7 @@ class GroupProductServiceImplIntegrationTest {
 
     // only for demo, study, check etc
     @Test
+    @Sql("/import_for_test_group.sql")
     void findByParentId(@Autowired GroupProductRepository repository) {
         Long ID = 1L;
         List<GroupProductEntity> groups = repository.findByParentIdOrderByParentIdAscIdAsc(ID);
