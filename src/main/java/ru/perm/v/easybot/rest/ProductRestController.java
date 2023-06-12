@@ -4,6 +4,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 import ru.perm.v.easybot.dto.ProductDTO;
 import ru.perm.v.easybot.entity.ProductEntity;
@@ -32,6 +34,7 @@ public class ProductRestController {
 
     @GetMapping("/{id}")
     @ApiOperation("Get ProductDTO by id")
+    @Cacheable(value = "product")
     public ProductDTO getById(@PathVariable Long id) throws Exception {
         ProductEntity entity = productService.getById(id);
         if (entity == null) {
@@ -53,6 +56,7 @@ public class ProductRestController {
 
     @PostMapping(value = "/", consumes = "application/json", produces = "application/json")
     @ApiOperation("Save ProductDTO")
+    @CacheEvict(value = "product", key = "#productDTO.id")
     public ProductDTO save(@RequestBody ProductDTO productDTO) throws Exception {
         List<String> errors = validator.validate(productDTO);
         if (errors.size() > 0) {
@@ -94,6 +98,7 @@ public class ProductRestController {
 
     @DeleteMapping("/{id}")
     @ApiOperation("Delete ProductDTO by id")
+    @CacheEvict(value = "product", key = "#id")
     public void delete(@PathVariable("id") Long id) {
         log.info("Delete product %s", id);
         try {

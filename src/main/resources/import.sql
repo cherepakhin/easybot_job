@@ -1,3 +1,6 @@
+delete from product;
+delete from group_product;
+
 insert into group_product(id, name, parent_id, is_last) values
 (1, 'IT products', -1, false),
 (2, 'Computers', 1, false),

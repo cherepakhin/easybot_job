@@ -3,14 +3,12 @@ package ru.perm.v.easybot.rest;
 import org.junit.jupiter.api.Test;
 import ru.perm.v.easybot.dto.ProductDTO;
 import ru.perm.v.easybot.entity.ProductEntity;
-import ru.perm.v.easybot.rest.excpt.BadRequestException;
 import ru.perm.v.easybot.service.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

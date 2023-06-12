@@ -21,6 +21,4 @@ public interface GroupProductService {
      */
     List<GroupProductEntity> findAllLastGroupByAnyGroupId(Long id);
     Long getMaxId();
-
-    void reset();
 }

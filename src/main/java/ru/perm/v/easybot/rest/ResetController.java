@@ -17,6 +17,9 @@ import ru.perm.v.easybot.service.ProductService;
 @Slf4j
 @Api(tags = "reset-api")
 @ExtendWith(SpringExtension.class)
+/**
+ * ONLY FOR INTEGRATION TESTS
+ */
 public class ResetController {
 
     @Autowired
@@ -30,8 +33,6 @@ public class ResetController {
     @GetMapping("/db")
     @ApiOperation("Reset database")
     public String resetDatabase() throws Exception {
-        productService.reset();
-        groupProductService.reset();
         return Ok;
     }
 

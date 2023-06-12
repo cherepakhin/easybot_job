@@ -21,8 +21,4 @@ public interface GroupProductRepository extends JpaRepository<GroupProductEntity
     List<GroupProductEntity> findByParentIdOrderByParentIdAsc(Long id);
 
     List<GroupProductEntity> findByParentIdOrderByParentIdAscIdAsc(Long id);
-
-    @Modifying
-    @Query(value = "delete FROM GroupProductEntity where id not in (31,32,33,41,42,51,52,61,62)")
-    void reset();
 }

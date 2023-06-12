@@ -18,6 +18,4 @@ public interface ProductService {
     void delete(Long id) throws Exception;
 
     List<ProductEntity> getByIdGroupProduct(Long id);
-
-    void reset();
 }

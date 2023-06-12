@@ -30,7 +30,7 @@ class ProductRepositoryIntegrationTest {
     }
 
     @Test
-//    Use for concrete test
+//  insert_desktop4.sql used for concrete this test
     @Sql({"/insert_desktop4.sql"})
     void findByGroupProductIdOrderByIdAsc() {
         List<ProductEntity> desktops = repository.findByGroupProductIdOrderByIdAsc(3L);
@@ -40,6 +40,5 @@ class ProductRepositoryIntegrationTest {
         assertEquals("Desktop3", desktops.get(2).getName());
         assertEquals("Desktop4", desktops.get(3).getName());
     }
-
 
 }

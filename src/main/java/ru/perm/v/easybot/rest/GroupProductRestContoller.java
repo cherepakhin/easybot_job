@@ -41,7 +41,7 @@ public class GroupProductRestContoller {
 
     @GetMapping("/evict/{id}")
     @ApiOperation("Clear cache by id. ONLY FOR DEMO!")
-    @CacheEvict(value = "group_product")
+    @CacheEvict(value = "group_product", key = "#id")
     public String evict(@PathVariable("id") Long id) {
         return "Ok";
     }
@@ -89,7 +89,7 @@ public class GroupProductRestContoller {
 
     @PostMapping("/{id}")
     @ApiOperation("Upadte GroupProductDTO")
-    @CacheEvict(value = "group_product", key = "id")
+    @CacheEvict(value = "group_product", key = "#id")
     public GroupProductDTO update(@PathVariable("id") Long id, String name, Long parentId, Boolean isLast) {
         log.info(String.format("Update GroupProductDTO id=%s, name=%s, parentId=%s", id, name, parentId));
         GroupProductEntity entity = null;
@@ -119,7 +119,7 @@ public class GroupProductRestContoller {
 
     @DeleteMapping("/{id}")
     @ApiOperation("Delete GroupProductDTO")
-    @CacheEvict(value = "group_product")
+    @CacheEvict(value = "group_product", key = "#id")
     public void delete(@PathVariable("id") Long id) {
         log.info("Delete group product %s", id);
         try {
@@ -129,5 +129,4 @@ public class GroupProductRestContoller {
             throw new Err500Exception(e.getMessage());
         }
     }
-
 }

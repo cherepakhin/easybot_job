@@ -116,11 +116,6 @@ public class GroupProductServiceImpl implements GroupProductService {
         return repository.getMaxId();
     }
 
-    @Override
-    public void reset() {
-        repository.reset();
-    }
-
     protected boolean isProductsInGroup(GroupProductEntity groupProduct) {
         return productService.getByIdGroupProduct(groupProduct.getId()).size() > 0;
     }

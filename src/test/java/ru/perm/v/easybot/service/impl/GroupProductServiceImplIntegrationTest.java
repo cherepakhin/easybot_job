@@ -79,12 +79,4 @@ class GroupProductServiceImplIntegrationTest {
         // Computers, Monitors, Hard drives
         assertEquals(3, groups.size());
     }
-
-    @Test
-    void reset(@Autowired GroupProductRepository repository) {
-        GroupProductService groupProductService = new GroupProductServiceImpl(repository, null);
-        groupProductService.reset();
-        assertEquals(0, groupProductService.getAll().size());
-    }
-
 }
