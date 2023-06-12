@@ -24,7 +24,7 @@ public interface GroupProductRepository extends JpaRepository<GroupProductEntity
     /**
      * delete except ROOT with id=1 "IT products"
      */
-    @Query(value = "delete FROM GroupProductEntity where ID>1")
+    @Query(value = "delete FROM GroupProductEntity where ID>1") // id=1 "IT products"
     @Modifying
     void reset();
 }
