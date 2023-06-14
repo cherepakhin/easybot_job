@@ -1,7 +1,6 @@
 package ru.perm.v.easybot.rest;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +25,9 @@ public class ResetController {
 
     private String Ok = "Ok";
 
-    @GetMapping("/db")
-    @ApiOperation("Reset database")
+    @GetMapping("/")
     public String resetDatabase() throws Exception {
+        log.info("RESET");
         resetDBService.reset();
         return Ok;
     }

@@ -25,6 +25,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
      * delete all products"
      */
     @Query(value = "delete FROM ProductEntity")
+//    @Sql("classpath:import_test.sql")
     @Modifying
     void reset();
 }

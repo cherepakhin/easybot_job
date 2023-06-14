@@ -23,6 +23,6 @@ public class ResetDBServiceImpl implements ResetDBService {
     public void reset() throws Exception {
         log.info("Reset database");
         productService.reset();
-        groupProductService.reset();
+//        groupProductService.reset();
     }
 }
